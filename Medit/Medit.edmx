@@ -1,0 +1,658 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MeditModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="MeditModelStoreContainer">
+          <EntitySet Name="CodePostal" EntityType="MeditModel.Store.CodePostal" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Entreprise" EntityType="MeditModel.Store.Entreprise" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Langue" EntityType="MeditModel.Store.Langue" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LangueProfession" EntityType="MeditModel.Store.LangueProfession" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Profession" EntityType="MeditModel.Store.Profession" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Travailleur" EntityType="MeditModel.Store.Travailleur" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Travailleur_NonSoumis" EntityType="MeditModel.Store.Travailleur_NonSoumis" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Travailleur_Soumis" EntityType="MeditModel.Store.Travailleur_Soumis" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TravEnt" EntityType="MeditModel.Store.TravEnt" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="EQU_Langu_Profe" Association="MeditModel.Store.EQU_Langu_Profe">
+            <End Role="Profession" EntitySet="Profession" />
+            <End Role="LangueProfession" EntitySet="LangueProfession" />
+          </AssociationSet>
+          <AssociationSet Name="ID_Trava_TravE_1_FK" Association="MeditModel.Store.ID_Trava_TravE_1_FK">
+            <End Role="TravEnt" EntitySet="TravEnt" />
+            <End Role="Travailleur_NonSoumis" EntitySet="Travailleur_NonSoumis" />
+          </AssociationSet>
+          <AssociationSet Name="ID_Trava_TravE_FK" Association="MeditModel.Store.ID_Trava_TravE_FK">
+            <End Role="TravEnt" EntitySet="TravEnt" />
+            <End Role="Travailleur_Soumis" EntitySet="Travailleur_Soumis" />
+          </AssociationSet>
+          <AssociationSet Name="REF_Entre_CodeP_FK" Association="MeditModel.Store.REF_Entre_CodeP_FK">
+            <End Role="CodePostal" EntitySet="CodePostal" />
+            <End Role="Entreprise" EntitySet="Entreprise" />
+          </AssociationSet>
+          <AssociationSet Name="REF_Entre_Langu_FK" Association="MeditModel.Store.REF_Entre_Langu_FK">
+            <End Role="Langue" EntitySet="Langue" />
+            <End Role="Entreprise" EntitySet="Entreprise" />
+          </AssociationSet>
+          <AssociationSet Name="REF_Langu_Langu_1_FK" Association="MeditModel.Store.REF_Langu_Langu_1_FK">
+            <End Role="Langue" EntitySet="Langue" />
+            <End Role="LangueProfession" EntitySet="LangueProfession" />
+          </AssociationSet>
+          <AssociationSet Name="REF_Trava_CodeP_FK" Association="MeditModel.Store.REF_Trava_CodeP_FK">
+            <End Role="CodePostal" EntitySet="CodePostal" />
+            <End Role="Travailleur" EntitySet="Travailleur" />
+          </AssociationSet>
+          <AssociationSet Name="REF_TravE_Entre_FK" Association="MeditModel.Store.REF_TravE_Entre_FK">
+            <End Role="Entreprise" EntitySet="Entreprise" />
+            <End Role="TravEnt" EntitySet="TravEnt" />
+          </AssociationSet>
+          <AssociationSet Name="REF_TravE_Profe_FK" Association="MeditModel.Store.REF_TravE_Profe_FK">
+            <End Role="Profession" EntitySet="Profession" />
+            <End Role="TravEnt" EntitySet="TravEnt" />
+          </AssociationSet>
+          <AssociationSet Name="REF_TravE_Trava" Association="MeditModel.Store.REF_TravE_Trava">
+            <End Role="Travailleur" EntitySet="Travailleur" />
+            <End Role="TravEnt" EntitySet="TravEnt" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CodePostal">
+          <Key>
+            <PropertyRef Name="Id_CodePostal" />
+          </Key>
+          <Property Name="Id_CodePostal" Type="numeric" Nullable="false" Precision="6" StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="numeric" Nullable="false" Precision="4" />
+          <Property Name="Localite" Type="varchar" Nullable="false" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Entreprise">
+          <Key>
+            <PropertyRef Name="Numero" />
+          </Key>
+          <Property Name="Numero" Type="numeric" Nullable="false" Precision="6" StoreGeneratedPattern="Identity" />
+          <Property Name="Denomination" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="AdresseNum" Type="varchar" Nullable="false" MaxLength="4" />
+          <Property Name="AdresseRue" Type="varchar" Nullable="false" MaxLength="60" />
+          <Property Name="NumTel" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="NbEmployeDebAnneeSoumis" Type="numeric" Nullable="false" Precision="6" />
+          <Property Name="NbEmployeDebAnneeNon_Soumis" Type="numeric" Nullable="false" Precision="6" />
+          <Property Name="Code_Secteur" Type="numeric" Nullable="false" Precision="6" />
+          <Property Name="Id_Langue" Type="numeric" Nullable="false" Precision="6" />
+          <Property Name="Id_CodePostal" Type="numeric" Nullable="false" Precision="6" />
+        </EntityType>
+        <EntityType Name="Langue">
+          <Key>
+            <PropertyRef Name="Id_Langue" />
+          </Key>
+          <Property Name="Id_Langue" Type="numeric" Nullable="false" Precision="6" StoreGeneratedPattern="Identity" />
+          <Property Name="Libelle" Type="varchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="LangueProfession">
+          <Key>
+            <PropertyRef Name="Id_LangueProfession" />
+          </Key>
+          <Property Name="Id_LangueProfession" Type="numeric" Nullable="false" Precision="8" StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Langue" Type="numeric" Nullable="false" Precision="6" />
+          <Property Name="Code" Type="numeric" Nullable="false" Precision="6" />
+          <Property Name="Denomination" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Profession">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="numeric" Nullable="false" Precision="6" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Travailleur">
+          <Key>
+            <PropertyRef Name="Id_Travailleur" />
+          </Key>
+          <Property Name="Id_Travailleur" Type="numeric" Nullable="false" Precision="6" StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="Prenom" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="NumTel" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="AdresseNum" Type="varchar" Nullable="false" MaxLength="4" />
+          <Property Name="AdresseRue" Type="varchar" Nullable="false" MaxLength="60" />
+          <Property Name="NumDossierMedical" Type="numeric" Precision="10" />
+          <Property Name="Id_CodePostal" Type="numeric" Nullable="false" Precision="6" />
+        </EntityType>
+        <EntityType Name="Travailleur_NonSoumis">
+          <Key>
+            <PropertyRef Name="Id_TravEnt" />
+          </Key>
+          <Property Name="Id_TravEnt" Type="numeric" Nullable="false" Precision="6" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Travailleur_Soumis">
+          <Key>
+            <PropertyRef Name="Id_TravEnt" />
+          </Key>
+          <Property Name="Id_TravEnt" Type="numeric" Nullable="false" Precision="6" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="TravEnt">
+          <Key>
+            <PropertyRef Name="Id_TravEnt" />
+          </Key>
+          <Property Name="Id_TravEnt" Type="numeric" Nullable="false" Precision="6" StoreGeneratedPattern="Identity" />
+          <Property Name="Interlocuteur" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="DateEntree" Type="date" Nullable="false" />
+          <Property Name="Id_Travailleur" Type="numeric" Nullable="false" Precision="6" />
+          <Property Name="DateSortie" Type="date" />
+          <Property Name="Code_Profession" Type="numeric" Nullable="false" Precision="6" />
+          <Property Name="Numero_Entreprise" Type="numeric" Nullable="false" Precision="6" />
+        </EntityType>
+        <Association Name="EQU_Langu_Profe">
+          <End Role="Profession" Type="MeditModel.Store.Profession" Multiplicity="1" />
+          <End Role="LangueProfession" Type="MeditModel.Store.LangueProfession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profession">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="LangueProfession">
+              <PropertyRef Name="Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ID_Trava_TravE_1_FK">
+          <End Role="TravEnt" Type="MeditModel.Store.TravEnt" Multiplicity="1" />
+          <End Role="Travailleur_NonSoumis" Type="MeditModel.Store.Travailleur_NonSoumis" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TravEnt">
+              <PropertyRef Name="Id_TravEnt" />
+            </Principal>
+            <Dependent Role="Travailleur_NonSoumis">
+              <PropertyRef Name="Id_TravEnt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ID_Trava_TravE_FK">
+          <End Role="TravEnt" Type="MeditModel.Store.TravEnt" Multiplicity="1" />
+          <End Role="Travailleur_Soumis" Type="MeditModel.Store.Travailleur_Soumis" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TravEnt">
+              <PropertyRef Name="Id_TravEnt" />
+            </Principal>
+            <Dependent Role="Travailleur_Soumis">
+              <PropertyRef Name="Id_TravEnt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_Entre_CodeP_FK">
+          <End Role="CodePostal" Type="MeditModel.Store.CodePostal" Multiplicity="1" />
+          <End Role="Entreprise" Type="MeditModel.Store.Entreprise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodePostal">
+              <PropertyRef Name="Id_CodePostal" />
+            </Principal>
+            <Dependent Role="Entreprise">
+              <PropertyRef Name="Id_CodePostal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_Entre_Langu_FK">
+          <End Role="Langue" Type="MeditModel.Store.Langue" Multiplicity="1" />
+          <End Role="Entreprise" Type="MeditModel.Store.Entreprise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Langue">
+              <PropertyRef Name="Id_Langue" />
+            </Principal>
+            <Dependent Role="Entreprise">
+              <PropertyRef Name="Id_Langue" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_Langu_Langu_1_FK">
+          <End Role="Langue" Type="MeditModel.Store.Langue" Multiplicity="1" />
+          <End Role="LangueProfession" Type="MeditModel.Store.LangueProfession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Langue">
+              <PropertyRef Name="Id_Langue" />
+            </Principal>
+            <Dependent Role="LangueProfession">
+              <PropertyRef Name="Id_Langue" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_Trava_CodeP_FK">
+          <End Role="CodePostal" Type="MeditModel.Store.CodePostal" Multiplicity="1" />
+          <End Role="Travailleur" Type="MeditModel.Store.Travailleur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodePostal">
+              <PropertyRef Name="Id_CodePostal" />
+            </Principal>
+            <Dependent Role="Travailleur">
+              <PropertyRef Name="Id_CodePostal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_TravE_Entre_FK">
+          <End Role="Entreprise" Type="MeditModel.Store.Entreprise" Multiplicity="1" />
+          <End Role="TravEnt" Type="MeditModel.Store.TravEnt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entreprise">
+              <PropertyRef Name="Numero" />
+            </Principal>
+            <Dependent Role="TravEnt">
+              <PropertyRef Name="Numero_Entreprise" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_TravE_Profe_FK">
+          <End Role="Profession" Type="MeditModel.Store.Profession" Multiplicity="1" />
+          <End Role="TravEnt" Type="MeditModel.Store.TravEnt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profession">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="TravEnt">
+              <PropertyRef Name="Code_Profession" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_TravE_Trava">
+          <End Role="Travailleur" Type="MeditModel.Store.Travailleur" Multiplicity="1" />
+          <End Role="TravEnt" Type="MeditModel.Store.TravEnt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Travailleur">
+              <PropertyRef Name="Id_Travailleur" />
+            </Principal>
+            <Dependent Role="TravEnt">
+              <PropertyRef Name="Id_Travailleur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MeditModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MeditEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="CodePostals" EntityType="MeditModel.CodePostal" />
+          <EntitySet Name="Entreprises" EntityType="MeditModel.Entreprise" />
+          <EntitySet Name="Langues" EntityType="MeditModel.Langue" />
+          <EntitySet Name="LangueProfessions" EntityType="MeditModel.LangueProfession" />
+          <EntitySet Name="Professions" EntityType="MeditModel.Profession" />
+          <EntitySet Name="Travailleurs" EntityType="MeditModel.Travailleur" />
+          <EntitySet Name="Travailleur_NonSoumis" EntityType="MeditModel.Travailleur_NonSoumis" />
+          <EntitySet Name="Travailleur_Soumis" EntityType="MeditModel.Travailleur_Soumis" />
+          <EntitySet Name="TravEnts" EntityType="MeditModel.TravEnt" />
+          <AssociationSet Name="REF_Entre_CodeP_FK" Association="MeditModel.REF_Entre_CodeP_FK">
+            <End Role="CodePostal" EntitySet="CodePostals" />
+            <End Role="Entreprise" EntitySet="Entreprises" />
+          </AssociationSet>
+          <AssociationSet Name="REF_Trava_CodeP_FK" Association="MeditModel.REF_Trava_CodeP_FK">
+            <End Role="CodePostal" EntitySet="CodePostals" />
+            <End Role="Travailleur" EntitySet="Travailleurs" />
+          </AssociationSet>
+          <AssociationSet Name="REF_Entre_Langu_FK" Association="MeditModel.REF_Entre_Langu_FK">
+            <End Role="Langue" EntitySet="Langues" />
+            <End Role="Entreprise" EntitySet="Entreprises" />
+          </AssociationSet>
+          <AssociationSet Name="REF_TravE_Entre_FK" Association="MeditModel.REF_TravE_Entre_FK">
+            <End Role="Entreprise" EntitySet="Entreprises" />
+            <End Role="TravEnt" EntitySet="TravEnts" />
+          </AssociationSet>
+          <AssociationSet Name="REF_Langu_Langu_1_FK" Association="MeditModel.REF_Langu_Langu_1_FK">
+            <End Role="Langue" EntitySet="Langues" />
+            <End Role="LangueProfession" EntitySet="LangueProfessions" />
+          </AssociationSet>
+          <AssociationSet Name="EQU_Langu_Profe" Association="MeditModel.EQU_Langu_Profe">
+            <End Role="Profession" EntitySet="Professions" />
+            <End Role="LangueProfession" EntitySet="LangueProfessions" />
+          </AssociationSet>
+          <AssociationSet Name="REF_TravE_Profe_FK" Association="MeditModel.REF_TravE_Profe_FK">
+            <End Role="Profession" EntitySet="Professions" />
+            <End Role="TravEnt" EntitySet="TravEnts" />
+          </AssociationSet>
+          <AssociationSet Name="REF_TravE_Trava" Association="MeditModel.REF_TravE_Trava">
+            <End Role="Travailleur" EntitySet="Travailleurs" />
+            <End Role="TravEnt" EntitySet="TravEnts" />
+          </AssociationSet>
+          <AssociationSet Name="ID_Trava_TravE_1_FK" Association="MeditModel.ID_Trava_TravE_1_FK">
+            <End Role="TravEnt" EntitySet="TravEnts" />
+            <End Role="Travailleur_NonSoumis" EntitySet="Travailleur_NonSoumis" />
+          </AssociationSet>
+          <AssociationSet Name="ID_Trava_TravE_FK" Association="MeditModel.ID_Trava_TravE_FK">
+            <End Role="TravEnt" EntitySet="TravEnts" />
+            <End Role="Travailleur_Soumis" EntitySet="Travailleur_Soumis" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CodePostal">
+          <Key>
+            <PropertyRef Name="Id_CodePostal" />
+          </Key>
+          <Property Name="Id_CodePostal" Type="Decimal" Nullable="false" Precision="6" Scale="0" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="Decimal" Nullable="false" Precision="4" Scale="0" />
+          <Property Name="Localite" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Entreprises" Relationship="MeditModel.REF_Entre_CodeP_FK" FromRole="CodePostal" ToRole="Entreprise" />
+          <NavigationProperty Name="Travailleurs" Relationship="MeditModel.REF_Trava_CodeP_FK" FromRole="CodePostal" ToRole="Travailleur" />
+        </EntityType>
+        <EntityType Name="Entreprise">
+          <Key>
+            <PropertyRef Name="Numero" />
+          </Key>
+          <Property Name="Numero" Type="Decimal" Nullable="false" Precision="6" Scale="0" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Denomination" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="AdresseNum" Type="String" Nullable="false" MaxLength="4" Unicode="false" FixedLength="false" />
+          <Property Name="AdresseRue" Type="String" Nullable="false" MaxLength="60" Unicode="false" FixedLength="false" />
+          <Property Name="NumTel" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="NbEmployeDebAnneeSoumis" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="NbEmployeDebAnneeNon_Soumis" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="Code_Secteur" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="Id_Langue" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="Id_CodePostal" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <NavigationProperty Name="CodePostal" Relationship="MeditModel.REF_Entre_CodeP_FK" FromRole="Entreprise" ToRole="CodePostal" />
+          <NavigationProperty Name="Langue" Relationship="MeditModel.REF_Entre_Langu_FK" FromRole="Entreprise" ToRole="Langue" />
+          <NavigationProperty Name="TravEnts" Relationship="MeditModel.REF_TravE_Entre_FK" FromRole="Entreprise" ToRole="TravEnt" />
+        </EntityType>
+        <EntityType Name="Langue">
+          <Key>
+            <PropertyRef Name="Id_Langue" />
+          </Key>
+          <Property Name="Id_Langue" Type="Decimal" Nullable="false" Precision="6" Scale="0" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Libelle" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Entreprises" Relationship="MeditModel.REF_Entre_Langu_FK" FromRole="Langue" ToRole="Entreprise" />
+          <NavigationProperty Name="LangueProfessions" Relationship="MeditModel.REF_Langu_Langu_1_FK" FromRole="Langue" ToRole="LangueProfession" />
+        </EntityType>
+        <EntityType Name="LangueProfession">
+          <Key>
+            <PropertyRef Name="Id_LangueProfession" />
+          </Key>
+          <Property Name="Id_LangueProfession" Type="Decimal" Nullable="false" Precision="8" Scale="0" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Langue" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="Code" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="Denomination" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Langue" Relationship="MeditModel.REF_Langu_Langu_1_FK" FromRole="LangueProfession" ToRole="Langue" />
+          <NavigationProperty Name="Profession" Relationship="MeditModel.EQU_Langu_Profe" FromRole="LangueProfession" ToRole="Profession" />
+        </EntityType>
+        <EntityType Name="Profession">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Decimal" Nullable="false" Precision="6" Scale="0" p1:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="LangueProfessions" Relationship="MeditModel.EQU_Langu_Profe" FromRole="Profession" ToRole="LangueProfession" />
+          <NavigationProperty Name="TravEnts" Relationship="MeditModel.REF_TravE_Profe_FK" FromRole="Profession" ToRole="TravEnt" />
+        </EntityType>
+        <EntityType Name="Travailleur">
+          <Key>
+            <PropertyRef Name="Id_Travailleur" />
+          </Key>
+          <Property Name="Id_Travailleur" Type="Decimal" Nullable="false" Precision="6" Scale="0" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="Prenom" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="NumTel" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="AdresseNum" Type="String" Nullable="false" MaxLength="4" Unicode="false" FixedLength="false" />
+          <Property Name="AdresseRue" Type="String" Nullable="false" MaxLength="60" Unicode="false" FixedLength="false" />
+          <Property Name="NumDossierMedical" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="Id_CodePostal" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <NavigationProperty Name="CodePostal" Relationship="MeditModel.REF_Trava_CodeP_FK" FromRole="Travailleur" ToRole="CodePostal" />
+          <NavigationProperty Name="TravEnts" Relationship="MeditModel.REF_TravE_Trava" FromRole="Travailleur" ToRole="TravEnt" />
+        </EntityType>
+        <EntityType Name="Travailleur_NonSoumis">
+          <Key>
+            <PropertyRef Name="Id_TravEnt" />
+          </Key>
+          <Property Name="Id_TravEnt" Type="Decimal" Nullable="false" Precision="6" Scale="0" p1:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="TravEnt" Relationship="MeditModel.ID_Trava_TravE_1_FK" FromRole="Travailleur_NonSoumis" ToRole="TravEnt" />
+        </EntityType>
+        <EntityType Name="Travailleur_Soumis">
+          <Key>
+            <PropertyRef Name="Id_TravEnt" />
+          </Key>
+          <Property Name="Id_TravEnt" Type="Decimal" Nullable="false" Precision="6" Scale="0" p1:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="TravEnt" Relationship="MeditModel.ID_Trava_TravE_FK" FromRole="Travailleur_Soumis" ToRole="TravEnt" />
+        </EntityType>
+        <EntityType Name="TravEnt">
+          <Key>
+            <PropertyRef Name="Id_TravEnt" />
+          </Key>
+          <Property Name="Id_TravEnt" Type="Decimal" Nullable="false" Precision="6" Scale="0" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Interlocuteur" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="DateEntree" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Id_Travailleur" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="DateSortie" Type="DateTime" Precision="0" />
+          <Property Name="Code_Profession" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="Numero_Entreprise" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <NavigationProperty Name="Entreprise" Relationship="MeditModel.REF_TravE_Entre_FK" FromRole="TravEnt" ToRole="Entreprise" />
+          <NavigationProperty Name="Profession" Relationship="MeditModel.REF_TravE_Profe_FK" FromRole="TravEnt" ToRole="Profession" />
+          <NavigationProperty Name="Travailleur" Relationship="MeditModel.REF_TravE_Trava" FromRole="TravEnt" ToRole="Travailleur" />
+          <NavigationProperty Name="Travailleur_NonSoumis" Relationship="MeditModel.ID_Trava_TravE_1_FK" FromRole="TravEnt" ToRole="Travailleur_NonSoumis" />
+          <NavigationProperty Name="Travailleur_Soumis" Relationship="MeditModel.ID_Trava_TravE_FK" FromRole="TravEnt" ToRole="Travailleur_Soumis" />
+        </EntityType>
+        <Association Name="REF_Entre_CodeP_FK">
+          <End Role="CodePostal" Type="MeditModel.CodePostal" Multiplicity="1" />
+          <End Role="Entreprise" Type="MeditModel.Entreprise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodePostal">
+              <PropertyRef Name="Id_CodePostal" />
+            </Principal>
+            <Dependent Role="Entreprise">
+              <PropertyRef Name="Id_CodePostal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_Trava_CodeP_FK">
+          <End Role="CodePostal" Type="MeditModel.CodePostal" Multiplicity="1" />
+          <End Role="Travailleur" Type="MeditModel.Travailleur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodePostal">
+              <PropertyRef Name="Id_CodePostal" />
+            </Principal>
+            <Dependent Role="Travailleur">
+              <PropertyRef Name="Id_CodePostal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_Entre_Langu_FK">
+          <End Role="Langue" Type="MeditModel.Langue" Multiplicity="1" />
+          <End Role="Entreprise" Type="MeditModel.Entreprise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Langue">
+              <PropertyRef Name="Id_Langue" />
+            </Principal>
+            <Dependent Role="Entreprise">
+              <PropertyRef Name="Id_Langue" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_TravE_Entre_FK">
+          <End Role="Entreprise" Type="MeditModel.Entreprise" Multiplicity="1" />
+          <End Role="TravEnt" Type="MeditModel.TravEnt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entreprise">
+              <PropertyRef Name="Numero" />
+            </Principal>
+            <Dependent Role="TravEnt">
+              <PropertyRef Name="Numero_Entreprise" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_Langu_Langu_1_FK">
+          <End Role="Langue" Type="MeditModel.Langue" Multiplicity="1" />
+          <End Role="LangueProfession" Type="MeditModel.LangueProfession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Langue">
+              <PropertyRef Name="Id_Langue" />
+            </Principal>
+            <Dependent Role="LangueProfession">
+              <PropertyRef Name="Id_Langue" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EQU_Langu_Profe">
+          <End Role="Profession" Type="MeditModel.Profession" Multiplicity="1" />
+          <End Role="LangueProfession" Type="MeditModel.LangueProfession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profession">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="LangueProfession">
+              <PropertyRef Name="Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_TravE_Profe_FK">
+          <End Role="Profession" Type="MeditModel.Profession" Multiplicity="1" />
+          <End Role="TravEnt" Type="MeditModel.TravEnt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profession">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="TravEnt">
+              <PropertyRef Name="Code_Profession" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="REF_TravE_Trava">
+          <End Role="Travailleur" Type="MeditModel.Travailleur" Multiplicity="1" />
+          <End Role="TravEnt" Type="MeditModel.TravEnt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Travailleur">
+              <PropertyRef Name="Id_Travailleur" />
+            </Principal>
+            <Dependent Role="TravEnt">
+              <PropertyRef Name="Id_Travailleur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ID_Trava_TravE_1_FK">
+          <End Role="TravEnt" Type="MeditModel.TravEnt" Multiplicity="1" />
+          <End Role="Travailleur_NonSoumis" Type="MeditModel.Travailleur_NonSoumis" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TravEnt">
+              <PropertyRef Name="Id_TravEnt" />
+            </Principal>
+            <Dependent Role="Travailleur_NonSoumis">
+              <PropertyRef Name="Id_TravEnt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ID_Trava_TravE_FK">
+          <End Role="TravEnt" Type="MeditModel.TravEnt" Multiplicity="1" />
+          <End Role="Travailleur_Soumis" Type="MeditModel.Travailleur_Soumis" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TravEnt">
+              <PropertyRef Name="Id_TravEnt" />
+            </Principal>
+            <Dependent Role="Travailleur_Soumis">
+              <PropertyRef Name="Id_TravEnt" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MeditModelStoreContainer" CdmEntityContainer="MeditEntities">
+          <EntitySetMapping Name="CodePostals">
+            <EntityTypeMapping TypeName="MeditModel.CodePostal">
+              <MappingFragment StoreEntitySet="CodePostal">
+                <ScalarProperty Name="Id_CodePostal" ColumnName="Id_CodePostal" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Localite" ColumnName="Localite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entreprises">
+            <EntityTypeMapping TypeName="MeditModel.Entreprise">
+              <MappingFragment StoreEntitySet="Entreprise">
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Denomination" ColumnName="Denomination" />
+                <ScalarProperty Name="AdresseNum" ColumnName="AdresseNum" />
+                <ScalarProperty Name="AdresseRue" ColumnName="AdresseRue" />
+                <ScalarProperty Name="NumTel" ColumnName="NumTel" />
+                <ScalarProperty Name="NbEmployeDebAnneeSoumis" ColumnName="NbEmployeDebAnneeSoumis" />
+                <ScalarProperty Name="NbEmployeDebAnneeNon_Soumis" ColumnName="NbEmployeDebAnneeNon_Soumis" />
+                <ScalarProperty Name="Code_Secteur" ColumnName="Code_Secteur" />
+                <ScalarProperty Name="Id_Langue" ColumnName="Id_Langue" />
+                <ScalarProperty Name="Id_CodePostal" ColumnName="Id_CodePostal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Langues">
+            <EntityTypeMapping TypeName="MeditModel.Langue">
+              <MappingFragment StoreEntitySet="Langue">
+                <ScalarProperty Name="Id_Langue" ColumnName="Id_Langue" />
+                <ScalarProperty Name="Libelle" ColumnName="Libelle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LangueProfessions">
+            <EntityTypeMapping TypeName="MeditModel.LangueProfession">
+              <MappingFragment StoreEntitySet="LangueProfession">
+                <ScalarProperty Name="Id_LangueProfession" ColumnName="Id_LangueProfession" />
+                <ScalarProperty Name="Id_Langue" ColumnName="Id_Langue" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Denomination" ColumnName="Denomination" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Professions">
+            <EntityTypeMapping TypeName="MeditModel.Profession">
+              <MappingFragment StoreEntitySet="Profession">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Travailleurs">
+            <EntityTypeMapping TypeName="MeditModel.Travailleur">
+              <MappingFragment StoreEntitySet="Travailleur">
+                <ScalarProperty Name="Id_Travailleur" ColumnName="Id_Travailleur" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="NumTel" ColumnName="NumTel" />
+                <ScalarProperty Name="AdresseNum" ColumnName="AdresseNum" />
+                <ScalarProperty Name="AdresseRue" ColumnName="AdresseRue" />
+                <ScalarProperty Name="NumDossierMedical" ColumnName="NumDossierMedical" />
+                <ScalarProperty Name="Id_CodePostal" ColumnName="Id_CodePostal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Travailleur_NonSoumis">
+            <EntityTypeMapping TypeName="MeditModel.Travailleur_NonSoumis">
+              <MappingFragment StoreEntitySet="Travailleur_NonSoumis">
+                <ScalarProperty Name="Id_TravEnt" ColumnName="Id_TravEnt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Travailleur_Soumis">
+            <EntityTypeMapping TypeName="MeditModel.Travailleur_Soumis">
+              <MappingFragment StoreEntitySet="Travailleur_Soumis">
+                <ScalarProperty Name="Id_TravEnt" ColumnName="Id_TravEnt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TravEnts">
+            <EntityTypeMapping TypeName="MeditModel.TravEnt">
+              <MappingFragment StoreEntitySet="TravEnt">
+                <ScalarProperty Name="Id_TravEnt" ColumnName="Id_TravEnt" />
+                <ScalarProperty Name="Interlocuteur" ColumnName="Interlocuteur" />
+                <ScalarProperty Name="DateEntree" ColumnName="DateEntree" />
+                <ScalarProperty Name="Id_Travailleur" ColumnName="Id_Travailleur" />
+                <ScalarProperty Name="DateSortie" ColumnName="DateSortie" />
+                <ScalarProperty Name="Code_Profession" ColumnName="Code_Profession" />
+                <ScalarProperty Name="Numero_Entreprise" ColumnName="Numero_Entreprise" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

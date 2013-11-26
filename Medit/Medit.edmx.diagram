@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a50fab1cf9bf4f36b95617735eb9ad7c" Name="Diagram1">
+        <EntityTypeShape EntityType="MeditModel.CodePostal" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeditModel.Entreprise" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeditModel.Langue" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeditModel.LangueProfession" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeditModel.Profession" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeditModel.Travailleur" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeditModel.Travailleur_NonSoumis" Width="1.5" PointX="7.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeditModel.Travailleur_Soumis" Width="1.5" PointX="7.5" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeditModel.TravEnt" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <AssociationConnector Association="MeditModel.REF_Entre_CodeP_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MeditModel.REF_Trava_CodeP_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MeditModel.REF_Entre_Langu_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MeditModel.REF_TravE_Entre_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MeditModel.REF_Langu_Langu_1_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MeditModel.EQU_Langu_Profe" ManuallyRouted="false" />
+        <AssociationConnector Association="MeditModel.REF_TravE_Profe_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MeditModel.REF_TravE_Trava" ManuallyRouted="false" />
+        <AssociationConnector Association="MeditModel.ID_Trava_TravE_1_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="MeditModel.ID_Trava_TravE_FK" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
