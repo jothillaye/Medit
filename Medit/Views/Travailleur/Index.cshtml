@@ -1,19 +1,16 @@
 ﻿@model IEnumerable<Medit.Travailleur>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Travailleur/entreprise";
 }
 
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nouveau lien travailleur/entreprise", "Create")
 </p>
 <table>
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Id_Travailleur)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Nom)
         </th>
@@ -40,9 +37,6 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id_Travailleur)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Nom)
         </td>

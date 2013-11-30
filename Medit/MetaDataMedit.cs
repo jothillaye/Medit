@@ -21,7 +21,32 @@ namespace Medit
     {
         public class TravailleurMetaData
         {
+            public decimal Id_Travailleur { get; set; }
+            [Required]
+            public string Nom { get; set; }
 
+            [Required]
+            [Display(Name = "Prénom")]
+            public string Prenom { get; set; }
+
+            [Required]
+            [Display(Name = "Numéro de téléphone")]
+            public string NumTel { get; set; }
+
+            [Required]
+            [Display(Name = "Numéro")]
+            public string AdresseNum { get; set; }
+
+            [Required]
+            [Display(Name = "Rue")]
+            public string AdresseRue { get; set; }
+
+            [Display(Name = "Dossier médical")]
+            public Nullable<decimal> NumDossierMedical { get; set; }
+
+            [Required]
+            [Display(Name = "Code postal")]
+            public decimal Id_CodePostal { get; set; }
         }
     }
 }

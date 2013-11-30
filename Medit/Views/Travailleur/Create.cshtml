@@ -1,7 +1,7 @@
 ﻿@model Medit.Travailleur
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Création lien travailleur/entreprise";
 }
 
 <h2>Create</h2>
@@ -12,14 +12,6 @@
 
     <fieldset>
         <legend>Travailleur</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Id_Travailleur)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Id_Travailleur)
-            @Html.ValidationMessageFor(model => model.Id_Travailleur)
-        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Nom)
@@ -78,7 +70,7 @@
         </div>
 
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Créér" />
         </p>
     </fieldset>
 }
