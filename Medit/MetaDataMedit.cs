@@ -13,4 +13,13 @@ namespace Medit
             
         }
     }
+
+    [MetadataType(typeof(TravailleurMetaData))]
+    public partial class Travailleur
+    {
+        public class TravailleurMetaData
+        {
+
+        }
+    }
 }
