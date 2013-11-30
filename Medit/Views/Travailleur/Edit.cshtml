@@ -1,0 +1,92 @@
+﻿@model Medit.Travailleur
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Travailleur</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Id_Travailleur)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Id_Travailleur)
+            @Html.ValidationMessageFor(model => model.Id_Travailleur)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Nom)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Nom)
+            @Html.ValidationMessageFor(model => model.Nom)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Prenom)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Prenom)
+            @Html.ValidationMessageFor(model => model.Prenom)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NumTel)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NumTel)
+            @Html.ValidationMessageFor(model => model.NumTel)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AdresseNum)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AdresseNum)
+            @Html.ValidationMessageFor(model => model.AdresseNum)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AdresseRue)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AdresseRue)
+            @Html.ValidationMessageFor(model => model.AdresseRue)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NumDossierMedical)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NumDossierMedical)
+            @Html.ValidationMessageFor(model => model.NumDossierMedical)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Id_CodePostal, "CodePostal")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("Id_CodePostal", String.Empty)
+            @Html.ValidationMessageFor(model => model.Id_CodePostal)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,71 @@
+﻿@model Medit.Travailleur
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Travailleur</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Id_Travailleur)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Id_Travailleur)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Nom)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Nom)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Prenom)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Prenom)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NumTel)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NumTel)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AdresseNum)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AdresseNum)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AdresseRue)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AdresseRue)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NumDossierMedical)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NumDossierMedical)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CodePostal.Localite)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CodePostal.Localite)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

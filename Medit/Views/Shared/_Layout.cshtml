@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <title>@ViewBag.Title - Medit</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
@@ -12,17 +12,17 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                    <p class="site-title">@Html.ActionLink("your logo not here", "Index", "Home")</p>
                 </div>
                 <div class="float-right">
-                    <section id="login">
+                   <!-- <section id="login">
                         @Html.Partial("_LoginPartial")
-                    </section>
+                    </section>-->
                     <nav>
                         <ul id="menu">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Travailleur/Entreprise", "Index", "TravEnt")</li>
+                            <li>@Html.ActionLink("Travailleur", "Index", "Travailleur")</li>
                         </ul>
                     </nav>
                 </div>
@@ -37,7 +37,7 @@
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                    <p>&copy; @DateTime.Now.Year - Medit - Jenicot & Thillaye</p>
                 </div>
             </div>
         </footer>
