@@ -34,5 +34,7 @@ namespace Medit
         public DbSet<Travailleur_NonSoumis> Travailleur_NonSoumis { get; set; }
         public DbSet<Travailleur_Soumis> Travailleur_Soumis { get; set; }
         public DbSet<TravEnt> TravEnts { get; set; }
+
+        public System.Collections.IEnumerable Travailleur { get; set; }
     }
 }

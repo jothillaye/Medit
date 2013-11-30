@@ -38,6 +38,7 @@ namespace Medit.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.Id_Travailleur = new SelectList(db.Travailleurs, "Id_Travailleur", "Nom");
             return View();
         }
 
@@ -55,6 +56,7 @@ namespace Medit.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.Id_Travailleur = new SelectList(db.Travailleurs, "Id_Travailleur", "Nom");
             return View(travent);
         }
 
