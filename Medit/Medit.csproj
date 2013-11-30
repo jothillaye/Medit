@@ -188,6 +188,7 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TravEntController.cs" />
     <Compile Include="Entreprise.cs">
       <DependentUpon>Medit.tt</DependentUpon>
     </Compile>
@@ -362,6 +363,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\TravEnt\Index.cshtml" />
+    <Content Include="Views\TravEnt\Details.cshtml" />
+    <Content Include="Views\TravEnt\Create.cshtml" />
+    <Content Include="Views\TravEnt\Edit.cshtml" />
+    <Content Include="Views\TravEnt\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -388,7 +394,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>57802</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:53843/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
