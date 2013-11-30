@@ -9,6 +9,8 @@ namespace Medit
     [MetadataType(typeof(TravEntMetaData))]
     public partial class TravEnt
     {
-        
+        public class TravEntMetaData { 
+            
+        }
     }
 }
