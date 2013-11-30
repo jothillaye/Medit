@@ -13,6 +13,23 @@ namespace Medit
             [Display(Name = "Date d'entrée")]
             [Required]
             public System.DateTime DateEntree { get; set; }
+
+            [Required]
+            public string Interlocuteur { get; set; }
+
+            [Display(Name = "Travailleur")]
+            [Required]
+            public decimal Id_Travailleur { get; set; }
+            
+            public Nullable<System.DateTime> DateSortie { get; set; }
+
+            [Display(Name = "Profession")]
+            [Required]
+            public decimal Code_Profession { get; set; }
+
+            [Display(Name = "Entreprise")]
+            [Required]
+            public decimal Numero_Entreprise { get; set; }
         }
     }
 
