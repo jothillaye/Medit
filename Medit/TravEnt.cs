@@ -21,6 +21,7 @@ namespace Medit
         public Nullable<System.DateTime> DateSortie { get; set; }
         public decimal Code_Profession { get; set; }
         public decimal Numero_Entreprise { get; set; }
+        public decimal Id_Langue { get; set; }
     
         public virtual Entreprise Entreprise { get; set; }
         public virtual Profession Profession { get; set; }

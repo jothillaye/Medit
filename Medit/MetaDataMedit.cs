@@ -30,6 +30,10 @@ namespace Medit
             [Display(Name = "Entreprise")]
             [Required]
             public decimal Numero_Entreprise { get; set; }
+
+            [Display(Name = "Langue")]
+            public decimal Id_Langue { get; set; }
+
         }
     }
 

@@ -38,7 +38,33 @@ namespace Medit.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.Id_Travailleur = new SelectList(db.Travailleurs, "Id_Travailleur", "Nom");
+            var travailleurs =
+                db.Travailleurs.ToArray()
+                    .Select(t => new
+                    {
+                        Id_Travailleur = t.Id_Travailleur,
+                        Name = string.Format("{0} {1}", t.Prenom, t.Nom)
+                    })
+                .ToList();
+            ViewBag.Id_Travailleur = new SelectList(travailleurs, "Id_Travailleur", "Name");
+            
+            var langues = (
+                from lang in db.Langues
+                select new { lang.Id_Langue, lang.Libelle })
+                .ToList();
+            ViewBag.Id_Langue = new SelectList(langues, "Id_Langue", "Libelle");
+
+            decimal idLang = langues.First().Id_Langue;
+
+            var professions = (
+                from prof in db.Professions
+                join langProf in db.LangueProfessions on prof.Code equals langProf.Code
+                join lang in db.Langues on langProf.Id_Langue equals lang.Id_Langue
+                where lang.Id_Langue == idLang
+                select new { prof.Code, langProf.Denomination })
+                .ToList();
+            ViewBag.Code_Profession = new SelectList(professions, "Code", "Denomination");
+            
             return View();
         }
 
@@ -56,7 +82,14 @@ namespace Medit.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Id_Travailleur = new SelectList(db.Travailleurs, "Id_Travailleur", "Nom");
+            var travailleurs =
+                db.Travailleurs.ToArray()
+                    .Select(t => new
+                    {
+                        Id_Travailleur = t.Id_Travailleur,
+                        name = string.Format("{0} {1}", t.Prenom, t.Nom)
+                    }).ToList();
+            ViewBag.Id_Travailleur = new SelectList(travailleurs, "Id_Travailleur", "Name", travent.Id_Travailleur);
             return View(travent);
         }
 
