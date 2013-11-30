@@ -15,4 +15,13 @@ namespace Medit
             public System.DateTime DateEntree { get; set; }
         }
     }
+
+    [MetadataType(typeof(TravailleurMetaData))]
+    public partial class Travailleur
+    {
+        public class TravailleurMetaData
+        {
+
+        }
+    }
 }
