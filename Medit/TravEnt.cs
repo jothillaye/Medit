@@ -12,8 +12,7 @@ namespace Medit
     using System;
     using System.Collections.Generic;
     
-    public partial class TravEnt
-    {
+    public partial class TravEnt {
         public decimal Id_TravEnt { get; set; }
         public string Interlocuteur { get; set; }
         public System.DateTime DateEntree { get; set; }

@@ -57,7 +57,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Code_Profession)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" id="profession">
             @Html.DropDownList("Code_Profession", "-- Select --")
             @Html.ValidationMessageFor(model => model.Code_Profession)
         </div>
@@ -73,8 +73,8 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Id_Langue)
         </div>
-        <div class="editor-field">
-            @Html.DropDownList("Id_Langue", "-- Select --")
+        <div class="editor-field" id="langue">
+            @Html.DropDownList("Id_Langue")
             @Html.ValidationMessageFor(model => model.Id_Langue)
         </div>
 
@@ -89,5 +89,31 @@
 </div>
 
 @section Scripts {
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $('#langue').on("change", function () {
+            var $idLangue = $('option:selected', this).val();
+
+            $.ajax({
+                url: '/TravEnt/Translate/'+$idLangue.toString(),
+                type: 'GET',
+                contentType: 'application/json;',
+                dataType: 'json',
+                success: function (result) {
+                    $('#Code_Profession').empty();
+                    $.each(result, function () {
+                        $profession = this;
+                        $.each($profession, function () {
+                            $("<option />", {
+                                val: this.Code,
+                                text: this.Denomination
+                            }).appendTo($('#Code_Profession'));
+                        });
+                    });
+                }
+            });                
+        });
+    </script>
 }

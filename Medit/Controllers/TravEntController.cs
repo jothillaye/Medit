@@ -10,6 +10,20 @@ namespace Medit.Controllers
 {
     public class TravEntController : Controller
     {
+        [HttpGet]
+        public JsonResult Translate(int id)
+        {
+            var professions = (
+                from prof in db.Professions
+                join langProf in db.LangueProfessions on prof.Code equals langProf.Code
+                join lang in db.Langues on langProf.Id_Langue equals lang.Id_Langue
+                where lang.Id_Langue == (decimal)id
+                select new { prof.Code, langProf.Denomination })
+            .ToList();
+
+            return Json(new { professions }, JsonRequestBehavior.AllowGet);
+        }
+
         private MeditEntities db = new MeditEntities();
 
         //
