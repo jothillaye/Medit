@@ -31,19 +31,19 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.DateEntree)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.DateEntree)
-            @Html.ValidationMessageFor(model => model.DateEntree)
-        </div>
-
-        <div class="editor-label">
             @Html.LabelFor(model => model.Id_Travailleur)
         </div>
         <div class="editor-field">
             @Html.DropDownList("Id_Travailleur", "-- Select --")
             @Html.ValidationMessageFor(model => model.Id_Travailleur)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DateEntree)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DateEntree)
+            @Html.ValidationMessageFor(model => model.DateEntree)
         </div>
 
         <div class="editor-label">
@@ -58,7 +58,7 @@
             @Html.LabelFor(model => model.Code_Profession)
         </div>
         <div class="editor-field" id="profession">
-            @Html.DropDownList("Code_Profession", "-- Select --")
+            @Html.DropDownList("Code_Profession")
             @Html.ValidationMessageFor(model => model.Code_Profession)
         </div>
 
@@ -66,7 +66,7 @@
             @Html.LabelFor(model => model.Numero_Entreprise)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Numero_Entreprise)
+            @Html.DropDownList("Numero_Entreprise")
             @Html.ValidationMessageFor(model => model.Numero_Entreprise)
         </div>
 
@@ -90,9 +90,12 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
+        $('input[type=datetime]').datepicker();
+
         $('#langue').on("change", function () {
             var $idLangue = $('option:selected', this).val();
 

@@ -61,6 +61,8 @@ namespace Medit.Controllers
                     })
                 .ToList();
             ViewBag.Id_Travailleur = new SelectList(travailleurs, "Id_Travailleur", "Name");
+
+            ViewBag.Numero_Entreprise = new SelectList(db.Entreprises, "Numero", "Denomination");
             
             var langues = (
                 from lang in db.Langues
