@@ -94,7 +94,7 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
-        $('input[type=datetime]').datepicker();
+        $('input[type=datetime]').datepicker({ dateFormat: 'dd-mm-yy', firstDay: 1 });
 
         $('#langue').on("change", function () {
             var $idLangue = $('option:selected', this).val();
