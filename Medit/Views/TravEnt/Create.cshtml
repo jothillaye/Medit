@@ -12,21 +12,12 @@
 
     <fieldset>
         <legend>TravEnt</legend>
-        <!--
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Id_TravEnt)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Id_TravEnt)
-            @Html.ValidationMessageFor(model => model.Id_TravEnt)
-        </div>
-        -->
-
-        <div class="editor-label">
+        <div class="button">
             @Html.LabelFor(model => model.Interlocuteur)
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Interlocuteur)
+        <div class="button">
+            @Html.RadioButton("Interlocuteur", 0) Non
+            @Html.RadioButton("Interlocuteur", 1) Oui
             @Html.ValidationMessageFor(model => model.Interlocuteur)
         </div>
 
@@ -94,7 +85,7 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
-        $('input[type=datetime]').datepicker({ dateFormat: 'dd-mm-yy', firstDay: 1 });
+        $('input[type=datetime]').datepicker();
 
         $('#langue').on("change", function () {
             var $idLangue = $('option:selected', this).val();

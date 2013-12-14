@@ -31,6 +31,16 @@ namespace Medit.Controllers
 
         public ActionResult Index()
         {
+            //var TravEntList = (
+            //    from travent in db.TravEnts
+            //    join langProf in db.LangueProfessions on travent.Code_Profession equals langProf.Code
+            //    join lang in db.Langues on langProf.Id_Langue equals lang.Id_Langue
+            //    where lang.Id_Langue == 0
+            //    join travailleur in db.Travailleurs on travent.Id_Travailleur equals travailleur.Id_Travailleur
+            //    join entreprise in db.Entreprises on travent.Numero_Entreprise equals entreprise.Numero
+            //    select new { Id_Travailleur = (travailleur.Prenom + " " + travailleur.Nom), Numero_Entreprise = entreprise.Denomination, Code_Profession = langProf.Denomination, travent.DateEntree, travent.DateSortie, travent.Interlocuteur})
+            //.ToList();
+
             return View(db.TravEnts.ToList());
         }
 
@@ -103,10 +113,31 @@ namespace Medit.Controllers
                     .Select(t => new
                     {
                         Id_Travailleur = t.Id_Travailleur,
-                        name = string.Format("{0} {1}", t.Prenom, t.Nom)
-                    }).ToList();
-            ViewBag.Id_Travailleur = new SelectList(travailleurs, "Id_Travailleur", "Name", travent.Id_Travailleur);
-            return View(travent);
+                        Name = string.Format("{0} {1}", t.Prenom, t.Nom)
+                    })
+                .ToList();
+            ViewBag.Id_Travailleur = new SelectList(travailleurs, "Id_Travailleur", "Name");
+
+            ViewBag.Numero_Entreprise = new SelectList(db.Entreprises, "Numero", "Denomination");
+
+            var langues = (
+                from lang in db.Langues
+                select new { lang.Id_Langue, lang.Libelle })
+                .ToList();
+            ViewBag.Id_Langue = new SelectList(langues, "Id_Langue", "Libelle");
+
+            decimal idLang = langues.First().Id_Langue;
+
+            var professions = (
+                from prof in db.Professions
+                join langProf in db.LangueProfessions on prof.Code equals langProf.Code
+                join lang in db.Langues on langProf.Id_Langue equals lang.Id_Langue
+                where lang.Id_Langue == idLang
+                select new { prof.Code, langProf.Denomination })
+                .ToList();
+            ViewBag.Code_Profession = new SelectList(professions, "Code", "Denomination");
+
+            return View();
         }
 
         //

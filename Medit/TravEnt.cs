@@ -21,6 +21,30 @@ namespace Medit
         public decimal Code_Profession { get; set; }
         public decimal Numero_Entreprise { get; set; }
         public decimal Id_Langue { get; set; }
+        public string DateEntreeFormated
+        {
+            get
+            {
+                return String.Format("{0:dd/MM/yyyy}", DateEntree);
+            }
+        }
+        public string DateSortieFormated
+        {
+            get
+            {
+                return String.Format("{0:dd/MM/yyyy}", DateSortie);
+            }
+        }
+        public string InterlocuteurFormated 
+        {
+            get
+            { 
+                if(Interlocuteur.CompareTo("0") == 0)
+                    return "Oui"; 
+                else
+                    return "Non";
+            }
+        }
     
         public virtual Entreprise Entreprise { get; set; }
         public virtual Profession Profession { get; set; }

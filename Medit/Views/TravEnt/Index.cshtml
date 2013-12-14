@@ -11,57 +11,53 @@
 </p>
 <table>
     <tr>
-        <!--<th>
-            @Html.DisplayNameFor(model => model.Id_TravEnt)
-        </th>-->
-        <th>
-            @Html.DisplayNameFor(model => model.Interlocuteur)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateEntree)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Id_Travailleur)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateSortie)
+            @Html.DisplayNameFor(model => model.Numero_Entreprise)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Code_Profession)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Numero_Entreprise)
+            @Html.DisplayNameFor(model => model.DateEntree)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateSortie)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Interlocuteur)
+        </th>
+
+
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Id_TravEnt)
+            @Html.DisplayFor(modelItem => item.Travailleur.NomPre)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Interlocuteur)
+            @Html.DisplayFor(modelItem => item.Entreprise.Denomination)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DateEntree)
+            @Html.DisplayFor(modelItem => item.Profession.LangueProfessions.ElementAt((int)(item.Entreprise.Langue.Id_Langue)).Denomination)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Id_Travailleur)
+            @Html.DisplayFor(modelItem => item.DateEntreeFormated)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DateSortie)
+            @Html.DisplayFor(modelItem => item.DateSortieFormated)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Code_Profession)
+            @Html.DisplayFor(modelItem => item.InterlocuteurFormated)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Numero_Entreprise)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id_TravEnt }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id_TravEnt }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id_TravEnt })
         </td>
     </tr>
 }
