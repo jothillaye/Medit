@@ -182,8 +182,6 @@ namespace Medit.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            setLists(travent.Id_TravEnt);
             return View(travent);
         }
 

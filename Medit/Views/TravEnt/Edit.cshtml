@@ -12,6 +12,10 @@
 
     <fieldset>
         <legend>TravEnt</legend>
+        
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.Id_TravEnt) @*Field necessary to get the id*@
+        </div>      
 
         <div class="button">
             @Html.LabelFor(model => model.Interlocuteur)
