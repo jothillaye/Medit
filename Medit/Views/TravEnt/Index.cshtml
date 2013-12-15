@@ -43,21 +43,21 @@
             @Html.DisplayFor(modelItem => item.Entreprise.Denomination)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Profession.LangueProfessions.ElementAt((int)(item.Entreprise.Langue.Id_Langue)).Denomination)
+            @Html.DisplayFor(modelItem => item.Profession.LangueProfessions.ElementAt((int)(item.Id_Langue)).Denomination)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DateEntreeFormated)
+            @Html.DisplayFor(modelItem => item.DateEntree)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DateSortieFormated)
+            @Html.DisplayFor(modelItem => item.DateSortie)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.InterlocuteurFormated)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id_TravEnt }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id_TravEnt }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id_TravEnt })
+            @Html.ActionLink("Edit", "Edit", new { idTravEnt = item.Id_TravEnt }) |
+            @Html.ActionLink("Details", "Details", new { idTravEnt = item.Id_TravEnt }) |
+            @Html.ActionLink("Delete", "Delete", new { idTravEnt = item.Id_TravEnt })
         </td>
     </tr>
 }

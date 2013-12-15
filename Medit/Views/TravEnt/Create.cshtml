@@ -48,7 +48,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Code_Profession)
         </div>
-        <div class="editor-field" id="profession">
+        <div class="editor-field">
             @Html.DropDownList("Code_Profession")
             @Html.ValidationMessageFor(model => model.Code_Profession)
         </div>
@@ -57,16 +57,15 @@
             @Html.LabelFor(model => model.Numero_Entreprise)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("Numero_Entreprise")
+            @Html.DropDownList("Numero_Entreprise","-- Select --")
             @Html.ValidationMessageFor(model => model.Numero_Entreprise)
         </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Id_Langue)
         </div>
-        <div class="editor-field" id="langue">
-            @Html.DropDownList("Id_Langue")
-            @Html.ValidationMessageFor(model => model.Id_Langue)
+        <div class="editor-field">
+            @Html.DropDownList("Id_Langue", null, new { @disabled = "disabled" })
         </div>
 
         <p>
@@ -85,26 +84,30 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
-        $('input[type=datetime]').datepicker();
+        $('input[type=datetime]').datepicker({ dateFormat: 'dd-mm-yy', firstDay: 1 });
 
-        $('#langue').on("change", function () {
-            var $idLangue = $('option:selected', this).val();
+        $('#Numero_Entreprise').on("change", function () {
+            var id_entreprise = $('option:selected', this).val();
 
             $.ajax({
-                url: '/TravEnt/Translate/'+$idLangue.toString(),
+                url: '/TravEnt/Translate/' + id_entreprise.toString(),
                 type: 'GET',
                 contentType: 'application/json;',
                 dataType: 'json',
                 success: function (result) {
+                    if (jQuery.isEmptyObject(result.langue) == false) {
+                        $('#Id_Langue').filter(function () {
+                            return $(this).val(result.langue[0].Id_Langue);
+                        }).prop('selected', true);
+                    }
+                        
                     $('#Code_Profession').empty();
-                    $.each(result, function () {
-                        $profession = this;
-                        $.each($profession, function () {
-                            $("<option />", {
-                                val: this.Code,
-                                text: this.Denomination
-                            }).appendTo($('#Code_Profession'));
-                        });
+                    var professions = result.professions;
+                    $.each(professions, function () {
+                        $("<option />", {
+                            val: this.Code,
+                            text: this.Denomination
+                        }).appendTo($('#Code_Profession'));
                     });
                 }
             });                
