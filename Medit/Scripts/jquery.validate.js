@@ -1023,7 +1023,9 @@ $.extend($.validator, {
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/date
 		date: function( value, element ) {
-			return this.optional(element) || !/Invalid|NaN/.test(new Date(value).toString());
+		    $.culture = Globalize.culture("fr-FR");
+		    var date = Globalize.parseDate(value, "dd/MM/yyyy", "fr-FR");
+		    return this.optional(element) || !/Invalid|NaN/.test(new Date(date).toString());
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/dateISO

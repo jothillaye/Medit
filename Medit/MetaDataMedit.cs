@@ -11,6 +11,7 @@ namespace Medit
     {
         public class TravEntMetaData {
             [Display(Name = "Date d'entrée")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
             [Required]
             public System.DateTime DateEntree { get; set; }
 
@@ -20,7 +21,9 @@ namespace Medit
             [Display(Name = "Travailleur")]
             [Required]
             public decimal Id_Travailleur { get; set; }
-            
+
+            [Display(Name = "Date de Sortie")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
             public Nullable<System.DateTime> DateSortie { get; set; }
 
             [Display(Name = "Profession")]
@@ -33,7 +36,6 @@ namespace Medit
 
             [Display(Name = "Langue")]
             public decimal Id_Langue { get; set; }
-
         }
     }
 
