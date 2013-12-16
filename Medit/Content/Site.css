@@ -433,6 +433,9 @@ input, textarea, input:not(input[type=radio]) {
     padding: 5px;
     width: 300px;
 }
+select {
+    min-width: 153px;
+}
 
 textarea {
     font-family: inherit;

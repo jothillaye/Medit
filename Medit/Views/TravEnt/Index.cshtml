@@ -43,7 +43,7 @@
             @Html.DisplayFor(modelItem => item.Entreprise.Denomination)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Profession.LangueProfessions.ElementAt((int)(item.Id_Langue)).Denomination)
+            @Html.DisplayFor(modelItem => item.Profession.LangueProfessions.ElementAt((int)item.Entreprise.Id_Langue - 1).Denomination)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateEntree)

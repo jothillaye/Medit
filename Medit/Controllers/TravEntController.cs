@@ -10,10 +10,12 @@ namespace Medit.Controllers
 {
     public class TravEntController : Controller
     {
+        private MeditEntities db = new MeditEntities();
+
         // Get list profession in a specific Id_Langue
         // GET: /TravEnt/Translate/5
         [HttpGet]
-        public JsonResult Translate(int id)
+        public JsonResult TranslateProfessions(int id)
         {
             decimal id_entreprise = id;
 
@@ -39,7 +41,18 @@ namespace Medit.Controllers
             return Json(new { langue, professions }, JsonRequestBehavior.AllowGet);
         }
 
-        private MeditEntities db = new MeditEntities();
+        [HttpPost]
+        public JsonResult FilterEntreprises(String filter) { 
+            var filteredEntreprises = db.Entreprises.ToArray()
+                .Where(ent => ent.Denomination.ToLower().Contains(filter.ToLower()))
+                .Select(ent => new 
+                {
+                    Numero_Entreprise = ent.Numero,
+                    Denomination = ent.Denomination
+                })
+            .ToList();
+            return Json(new {filteredEntreprises}, JsonRequestBehavior.AllowGet);
+        }
 
         // Set lists without selected values
         public void setLists() 

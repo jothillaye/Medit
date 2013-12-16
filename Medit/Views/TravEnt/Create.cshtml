@@ -56,8 +56,10 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Numero_Entreprise)
         </div>
+        <input type="text" id="filter_entreprise" />
         <div class="editor-field">
-            @Html.DropDownList("Numero_Entreprise","-- Select --")
+            @Html.ListBox("Numero_Entreprise")
+            @*@Html.DropDownList("Numero_Entreprise","-- Select --")*@
             @Html.ValidationMessageFor(model => model.Numero_Entreprise)
         </div>
 
@@ -80,8 +82,8 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
 
     <script>
         $('input[type=datetime]').datepicker({ dateFormat: 'dd-mm-yy', firstDay: 1 });
@@ -90,7 +92,7 @@
             var id_entreprise = $('option:selected', this).val();
 
             $.ajax({
-                url: '/TravEnt/Translate/' + id_entreprise.toString(),
+                url: '/TravEnt/TranslateProfessions/' + id_entreprise.toString(),
                 type: 'GET',
                 contentType: 'application/json;',
                 dataType: 'json',
@@ -104,13 +106,34 @@
                     $('#Code_Profession').empty();
                     var professions = result.professions;
                     $.each(professions, function () {
-                        $("<option />", {
+                        $('<option />', {
                             val: this.Code,
                             text: this.Denomination
                         }).appendTo($('#Code_Profession'));
                     });
                 }
             });                
+        });
+
+        $('#filter_entreprise').on("keyup", function() {
+            var filter = $('#filter_entreprise').val();
+            $.ajax({
+                url: '/TravEnt/FilterEntreprises',
+                data: '{"filter":"' + filter + '"}',
+                type: 'POST',
+                contentType: 'application/json;',
+                dataType: 'json',
+                success: function (result) {
+                    var entreprises = result.filteredEntreprises;
+                    $('#Numero_Entreprise').empty();
+                    $.each(entreprises, function () {
+                        $('<option />', {
+                            val: this.Numero_Entreprise,
+                            text: this.Denomination
+                        }).appendTo($('#Numero_Entreprise'));
+                    });
+                }
+            });
         });
     </script>
 }
