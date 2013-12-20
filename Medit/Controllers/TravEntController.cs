@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -12,8 +13,35 @@ namespace Medit.Controllers
     {
         private MeditEntities db = new MeditEntities();
 
-        // Get list profession in a specific Id_Langue
-        // GET: /TravEnt/Translate/5
+        public IList ListTravailleurs()
+        {
+            return db.Travailleurs.ToArray()
+                .Select(t => new
+                {
+                    Id_Travailleur = t.Id_Travailleur,
+                    Name = string.Format("{0} {1}", t.Prenom, t.Nom)
+                }).ToList();
+        }
+
+        public IEnumerable<Langue> ListLangues()
+        {
+            return (from lang in db.Langues
+                    select new { lang.Id_Langue, lang.Libelle }).ToList()
+                    .Select(x => new Langue
+                    {
+                        Id_Langue = x.Id_Langue,
+                        Libelle = x.Libelle
+                    });
+        }
+
+        public IList ListProfessions(decimal id_langue)
+        {
+            return (from langProf in db.LangueProfessions
+                    where langProf.Id_Langue == id_langue
+                    select new { langProf.Code, langProf.Denomination }).ToList();
+        }
+
+        // Get list profession in a specific Langage
         [HttpGet]
         public JsonResult TranslateProfessions(int id)
         {
@@ -32,13 +60,9 @@ namespace Medit.Controllers
             else  //TODO better way to do this ?
                 id_langue = 0;
 
-            var professions = (
-                from langProf in db.LangueProfessions
-                where langProf.Id_Langue == id_langue
-                select new { langProf.Code, langProf.Denomination })
-            .ToList();
-
-            return Json(new { langue, professions }, JsonRequestBehavior.AllowGet);
+            IList listProfession = ListProfessions(id_langue);
+            
+            return Json(new { langue, listProfession }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -54,37 +78,33 @@ namespace Medit.Controllers
             return Json(new {filteredEntreprises}, JsonRequestBehavior.AllowGet);
         }
 
-        // Set lists without selected values
-        public void setLists() 
+        [HttpPost]
+        public JsonResult FilterTravailleurs(String filter)
         {
-            var travailleurs =
-            db.Travailleurs.ToArray()
-                .Select(t => new
+            var filteredTravailleurs = db.Travailleurs.ToArray()
+                .Where(trav => trav.Nom.ToLower().Contains(filter.ToLower()) || trav.Prenom.ToLower().Contains(filter.ToLower())) 
+                .Select(trav => new
                 {
-                    Id_Travailleur = t.Id_Travailleur,
-                    Name = string.Format("{0} {1}", t.Prenom, t.Nom)
+                    Nom = trav.Nom,
+                    Prenom = trav.Prenom,
+                    Id_Travailleur = trav.Id_Travailleur
                 })
             .ToList();
-            ViewBag.Id_Travailleur = new SelectList(travailleurs, "Id_Travailleur", "Name");
+            return Json(new { filteredTravailleurs }, JsonRequestBehavior.AllowGet);
+        }
+
+        // Set lists without selected values
+        public void setLists()
+        {
+            ViewBag.Id_Travailleur = new SelectList(ListTravailleurs(), "Id_Travailleur", "Name");
 
             ViewBag.Numero_Entreprise = new SelectList(db.Entreprises, "Numero", "Denomination");
 
-            var langues = (
-                from lang in db.Langues
-                select new { lang.Id_Langue, lang.Libelle })
-            .ToList();
-            ViewBag.Id_Langue = new SelectList(langues, "Id_Langue", "Libelle");
+            ViewBag.Id_Langue = new SelectList(ListLangues(), "Id_Langue", "Libelle");
 
-            decimal id_lang = langues.First().Id_Langue;
+            decimal id_lang = ListLangues().First().Id_Langue;
 
-            var professions = (
-                from prof in db.Professions
-                join langProf in db.LangueProfessions on prof.Code equals langProf.Code
-                join lang in db.Langues on langProf.Id_Langue equals lang.Id_Langue
-                where lang.Id_Langue == id_lang
-                select new { prof.Code, langProf.Denomination })
-            .ToList();
-            ViewBag.Code_Profession = new SelectList(professions, "Code", "Denomination");
+            ViewBag.Code_Profession = new SelectList(ListProfessions(id_lang), "Code", "Denomination");
         }
 
         // Set lists with selected values
@@ -97,34 +117,15 @@ namespace Medit.Controllers
             }
             else
             {
-                var travailleurs =
-                db.Travailleurs.ToArray()
-                    .Select(t => new
-                    {
-                        Id_Travailleur = t.Id_Travailleur,
-                        Name = string.Format("{0} {1}", t.Prenom, t.Nom)
-                    })
-                .ToList();
-                ViewBag.Id_Travailleur = new SelectList(travailleurs, "Id_Travailleur", "Name", travent.Id_Travailleur);
+                ViewBag.Id_Travailleur = new SelectList(ListTravailleurs(), "Id_Travailleur", "Name", travent.Id_Travailleur);
 
                 ViewBag.Numero_Entreprise = new SelectList(db.Entreprises, "Numero", "Denomination", travent.Numero_Entreprise);
 
                 decimal id_lang = travent.Entreprise.Id_Langue;
-
-                var langues = (
-                    from lang in db.Langues
-                    select new { lang.Id_Langue, lang.Libelle })
-                .ToList();
-                ViewBag.Id_Langue = new SelectList(langues, "Id_Langue", "Libelle", id_lang);
-
-                var professions = (
-                    from prof in db.Professions
-                    join langProf in db.LangueProfessions on prof.Code equals langProf.Code
-                    join lang in db.Langues on langProf.Id_Langue equals lang.Id_Langue
-                    where lang.Id_Langue == id_lang
-                    select new { prof.Code, langProf.Denomination })
-                .ToList();
-                ViewBag.Code_Profession = new SelectList(professions, "Code", "Denomination", travent.Code_Profession);
+                
+                ViewBag.Id_Langue = new SelectList(ListLangues(), "Id_Langue", "Libelle", id_lang);
+                
+                ViewBag.Code_Profession = new SelectList(ListProfessions(id_lang), "Code", "Denomination", travent.Code_Profession);
             }
         }
 

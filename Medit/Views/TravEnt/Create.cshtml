@@ -24,8 +24,9 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Id_Travailleur)
         </div>
+        <input type="text" id="filter_travailleur" />
         <div class="editor-field">
-            @Html.DropDownList("Id_Travailleur", "-- Select --")
+            @Html.ListBox("Id_Travailleur")
             @Html.ValidationMessageFor(model => model.Id_Travailleur)
         </div>
 
@@ -59,7 +60,6 @@
         <input type="text" id="filter_entreprise" />
         <div class="editor-field">
             @Html.ListBox("Numero_Entreprise")
-            @*@Html.DropDownList("Numero_Entreprise","-- Select --")*@
             @Html.ValidationMessageFor(model => model.Numero_Entreprise)
         </div>
 
@@ -131,6 +131,27 @@
                             val: this.Numero_Entreprise,
                             text: this.Denomination
                         }).appendTo($('#Numero_Entreprise'));
+                    });
+                }
+            });
+        });
+
+        $('#filter_travailleur').on("keyup", function () {
+            var filter = $('#filter_travailleur').val();
+            $.ajax({
+                url: '/TravEnt/FilterTravailleurs',
+                data: '{"filter":"' + filter + '"}',
+                type: 'POST',
+                contentType: 'application/json;',
+                dataType: 'json',
+                success: function (result) {
+                    var travailleurs = result.filteredTravailleurs;
+                    $('#Id_Travailleur').empty();
+                    $.each(travailleurs, function () {
+                        $('<option />', {
+                            val: this.Id_Travailleur,
+                            text: (this.Prenom + ' ' + this.Nom)
+                        }).appendTo($('#Id_Travailleur'));
                     });
                 }
             });
