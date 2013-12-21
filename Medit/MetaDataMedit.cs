@@ -70,6 +70,9 @@ namespace Medit
             [Required]
             [Display(Name = "Code postal")]
             public decimal Id_CodePostal { get; set; }
+
+            [Display(Name="Prénom & Nom")]
+            public string NomPre { get { return Prenom + " " + Nom; } }           
         }
     }
 }

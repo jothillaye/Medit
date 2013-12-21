@@ -13,32 +13,69 @@ namespace Medit.Controllers
     {
         private MeditEntities db = new MeditEntities();
 
-        public IList ListTravailleurs()
+        public List<Travailleur> ListTravailleurs(string filter = null)
         {
-            return db.Travailleurs.ToArray()
-                .Select(t => new
+            List<Travailleur> listTrav = db.Travailleurs.ToArray()
+                .Select(t => new Travailleur
                 {
                     Id_Travailleur = t.Id_Travailleur,
-                    Name = string.Format("{0} {1}", t.Prenom, t.Nom)
-                }).ToList();
+                    Nom = t.Nom,
+                    Prenom = t.Prenom
+                })
+                .OrderBy(t => t.Nom)
+                .ToList();
+            
+            if(filter != null)
+            {
+                listTrav = listTrav.Where(trav => trav.Nom.ToLower().Contains(filter.ToLower()) || trav.Prenom.ToLower().Contains(filter.ToLower())).ToList(); 
+            }
+
+            return listTrav;
         }
 
-        public IEnumerable<Langue> ListLangues()
+        public List<Langue> ListLangues()
         {
-            return (from lang in db.Langues
-                    select new { lang.Id_Langue, lang.Libelle }).ToList()
-                    .Select(x => new Langue
+            return db.Langues.ToArray()
+                .Select(l => new Langue
                     {
-                        Id_Langue = x.Id_Langue,
-                        Libelle = x.Libelle
-                    });
+                        Id_Langue = l.Id_Langue,
+                        Libelle = l.Libelle
+                    })
+                .OrderBy(l => l.Libelle)
+                .ToList();
         }
 
-        public IList ListProfessions(decimal id_langue)
+        public List<LangueProfession> ListProfessions(decimal id_langue)
         {
-            return (from langProf in db.LangueProfessions
-                    where langProf.Id_Langue == id_langue
-                    select new { langProf.Code, langProf.Denomination }).ToList();
+            return db.LangueProfessions.ToArray()
+                .Select(lP => new LangueProfession
+                    {
+                        Id_Langue = lP.Id_Langue,
+                        Code = lP.Code,
+                        Denomination = lP.Denomination
+                    })
+                .Where(lP => lP.Id_Langue == id_langue)
+                .OrderBy(lP => lP.Denomination)
+                .ToList();
+        }
+
+        public List<Entreprise> ListEntreprises(string filter = null)
+        {
+            List<Entreprise> listEntreprises = db.Entreprises.ToArray()
+                .Select(e => new Entreprise
+                {
+                    Numero = e.Numero,
+                    Denomination = e.Denomination
+                })
+                .OrderBy(e => e.Denomination)
+                .ToList();
+
+            if (filter != null) 
+            { 
+                listEntreprises = listEntreprises.Where(ent => ent.Denomination.ToLower().Contains(filter.ToLower())).ToList();
+            }
+
+            return listEntreprises;
         }
 
         // Get list profession in a specific Langage
@@ -60,45 +97,29 @@ namespace Medit.Controllers
             else  //TODO better way to do this ?
                 id_langue = 0;
 
-            IList listProfession = ListProfessions(id_langue);
+            IList listProfessions = ListProfessions(id_langue);
             
-            return Json(new { langue, listProfession }, JsonRequestBehavior.AllowGet);
+            return Json(new { langue, listProfessions }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult FilterEntreprises(String filter) { 
-            var filteredEntreprises = db.Entreprises.ToArray()
-                .Where(ent => ent.Denomination.ToLower().Contains(filter.ToLower()))
-                .Select(ent => new 
-                {
-                    Numero_Entreprise = ent.Numero,
-                    Denomination = ent.Denomination
-                })
-            .ToList();
-            return Json(new {filteredEntreprises}, JsonRequestBehavior.AllowGet);
+        public JsonResult FilterEntreprises(String filter) 
+        {             
+            return Json(new {filteredEntreprises = ListEntreprises(filter)}, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult FilterTravailleurs(String filter)
         {
-            var filteredTravailleurs = db.Travailleurs.ToArray()
-                .Where(trav => trav.Nom.ToLower().Contains(filter.ToLower()) || trav.Prenom.ToLower().Contains(filter.ToLower())) 
-                .Select(trav => new
-                {
-                    Nom = trav.Nom,
-                    Prenom = trav.Prenom,
-                    Id_Travailleur = trav.Id_Travailleur
-                })
-            .ToList();
-            return Json(new { filteredTravailleurs }, JsonRequestBehavior.AllowGet);
+            return Json(new { filteredTravailleurs = ListTravailleurs(filter)}, JsonRequestBehavior.AllowGet);
         }
 
         // Set lists without selected values
         public void setLists()
         {
-            ViewBag.Id_Travailleur = new SelectList(ListTravailleurs(), "Id_Travailleur", "Name");
+            ViewBag.Id_Travailleur = new SelectList(ListTravailleurs(), "Id_Travailleur", "NomPre");
 
-            ViewBag.Numero_Entreprise = new SelectList(db.Entreprises, "Numero", "Denomination");
+            ViewBag.Numero_Entreprise = new SelectList(ListEntreprises(), "Numero", "Denomination");
 
             ViewBag.Id_Langue = new SelectList(ListLangues(), "Id_Langue", "Libelle");
 
@@ -117,9 +138,9 @@ namespace Medit.Controllers
             }
             else
             {
-                ViewBag.Id_Travailleur = new SelectList(ListTravailleurs(), "Id_Travailleur", "Name", travent.Id_Travailleur);
+                ViewBag.Id_Travailleur = new SelectList(ListTravailleurs(), "Id_Travailleur", "NomPre", travent.Id_Travailleur);
 
-                ViewBag.Numero_Entreprise = new SelectList(db.Entreprises, "Numero", "Denomination", travent.Numero_Entreprise);
+                ViewBag.Numero_Entreprise = new SelectList(ListEntreprises(), "Numero", "Denomination", travent.Numero_Entreprise);
 
                 decimal id_lang = travent.Entreprise.Id_Langue;
                 
@@ -128,7 +149,6 @@ namespace Medit.Controllers
                 ViewBag.Code_Profession = new SelectList(ListProfessions(id_lang), "Code", "Denomination", travent.Code_Profession);
             }
         }
-
 
         // GET: /TravEnt/
         public ActionResult Index()

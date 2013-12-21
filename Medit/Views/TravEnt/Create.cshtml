@@ -12,13 +12,30 @@
 
     <fieldset>
         <legend>TravEnt</legend>
-        <div class="button">
-            @Html.LabelFor(model => model.Interlocuteur)
-        </div>
-        <div class="button">
-            @Html.RadioButton("Interlocuteur", 0) Non
-            @Html.RadioButton("Interlocuteur", 1) Oui
-            @Html.ValidationMessageFor(model => model.Interlocuteur)
+        <div class="float-right">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Numero_Entreprise)
+            </div>
+            <input type="text" id="filter_entreprise" />
+            <div class="editor-field">
+                @Html.ListBox("Numero_Entreprise")
+                @Html.ValidationMessageFor(model => model.Numero_Entreprise)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Id_Langue)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownList("Id_Langue", null, String.Empty, new { @disabled = "disabled" })
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Code_Profession)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownList("Code_Profession", String.Empty)
+                @Html.ValidationMessageFor(model => model.Code_Profession)
+            </div>
         </div>
 
         <div class="editor-label">
@@ -28,7 +45,19 @@
         <div class="editor-field">
             @Html.ListBox("Id_Travailleur")
             @Html.ValidationMessageFor(model => model.Id_Travailleur)
+            <br /><a href="/Travailleur/Create">Ajouter un travailleur</a>
         </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Interlocuteur)
+        </div>
+        <div class="editor-field">
+            @Html.RadioButton("Interlocuteur", 0) Non
+            @Html.RadioButton("Interlocuteur", 1) Oui
+            @Html.ValidationMessageFor(model => model.Interlocuteur)
+        </div>
+
+
 
         <div class="editor-label">
             @Html.LabelFor(model => model.DateEntree)
@@ -46,29 +75,11 @@
             @Html.ValidationMessageFor(model => model.DateSortie)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Code_Profession)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("Code_Profession")
-            @Html.ValidationMessageFor(model => model.Code_Profession)
-        </div>
+        
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Numero_Entreprise)
-        </div>
-        <input type="text" id="filter_entreprise" />
-        <div class="editor-field">
-            @Html.ListBox("Numero_Entreprise")
-            @Html.ValidationMessageFor(model => model.Numero_Entreprise)
-        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Id_Langue)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("Id_Langue", null, new { @disabled = "disabled" })
-        </div>
+
+
 
         <p>
             <input type="submit" value="Create" />
@@ -88,9 +99,9 @@
     <script>
         $('input[type=datetime]').datepicker({ dateFormat: 'dd-mm-yy', firstDay: 1 });
 
+        // Get Ent.'s Language and Professions in that Language
         $('#Numero_Entreprise').on("change", function () {
             var id_entreprise = $('option:selected', this).val();
-
             $.ajax({
                 url: '/TravEnt/TranslateProfessions/' + id_entreprise.toString(),
                 type: 'GET',
@@ -102,9 +113,9 @@
                             return $(this).val(result.langue[0].Id_Langue);
                         }).prop('selected', true);
                     }
-                        
+
                     $('#Code_Profession').empty();
-                    var professions = result.professions;
+                    var professions = result.listProfessions;
                     $.each(professions, function () {
                         $('<option />', {
                             val: this.Code,
@@ -156,5 +167,9 @@
                 }
             });
         });
+
+        function validate() {
+            return true;
+        }
     </script>
 }

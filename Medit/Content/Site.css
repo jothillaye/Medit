@@ -424,6 +424,11 @@ label.checkbox {
     display: inline;
 }
 
+.editor-field {
+    width: auto;
+    margin-bottom: 15px;
+}
+
 input, textarea, input:not(input[type=radio]) {
     border: 1px solid #e2e2e2;
     background: #fff;
@@ -716,10 +721,11 @@ tr.pager td {
             font-weight: 600;
         }
 
-    /* forms */
+    /* forms 
     input {
         width: 90%;
     }
+    */
 
     /* login page */
     #loginForm {
