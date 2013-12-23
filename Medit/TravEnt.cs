@@ -11,6 +11,7 @@ namespace Medit
 {
     using System;
     using System.Collections.Generic;
+    using System.Web.Mvc;
     
     public partial class TravEnt {
         public decimal Id_TravEnt { get; set; }

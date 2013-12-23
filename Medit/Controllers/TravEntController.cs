@@ -97,7 +97,7 @@ namespace Medit.Controllers
             else  //TODO better way to do this ?
                 id_langue = 0;
 
-            IList listProfessions = ListProfessions(id_langue);
+            List<LangueProfession> listProfessions = ListProfessions(id_langue);
             
             return Json(new { langue, listProfessions }, JsonRequestBehavior.AllowGet);
         }

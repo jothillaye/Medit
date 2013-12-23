@@ -439,7 +439,7 @@ input, textarea, input:not(input[type=radio]) {
     width: 300px;
 }
 select {
-    min-width: 153px;
+    width: 204px;
 }
 
 textarea {
@@ -455,6 +455,10 @@ textarea {
         background: transparent;
         border: inherit;
         width: auto;
+    }
+
+    input[type=text] {
+        width: 200px;
     }
 
     input[type="submit"],
@@ -508,6 +512,7 @@ textarea {
 .field-validation-error {
     color: #e80c4d;
     font-weight: bold;
+    display: block;
 }
 
 .field-validation-valid {
@@ -547,6 +552,7 @@ th {
     text-align: left;
     border: none 0px;
     padding-left: 0;
+    padding-right: 8px;
 }
 
     th a {
@@ -762,4 +768,11 @@ tr.pager td {
         footer p {
             margin: 0;
         }
+}
+
+/* More
+----------------------------------------------------------*/
+.right-col {
+    width: 450px;
+    text-align: left;
 }

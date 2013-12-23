@@ -12,13 +12,13 @@
 
     <fieldset>
         <legend>TravEnt</legend>
-        <div class="float-right">
+        <div class="float-right right-col">
             <div class="editor-label">
                 @Html.LabelFor(model => model.Numero_Entreprise)
             </div>
             <input type="text" id="filter_entreprise" />
             <div class="editor-field">
-                @Html.ListBox("Numero_Entreprise")
+                @Html.DropDownList("Numero_Entreprise", (SelectList)ViewBag.Numero_Entreprise, new { size=4 })
                 @Html.ValidationMessageFor(model => model.Numero_Entreprise)
             </div>
 
@@ -36,6 +36,15 @@
                 @Html.DropDownList("Code_Profession", String.Empty)
                 @Html.ValidationMessageFor(model => model.Code_Profession)
             </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Interlocuteur)
+            </div>
+            <div class="editor-field">
+                @Html.RadioButton("Interlocuteur", 0) Non
+                @Html.RadioButton("Interlocuteur", 1) Oui
+                @Html.ValidationMessageFor(model => model.Interlocuteur)
+            </div>
         </div>
 
         <div class="editor-label">
@@ -43,21 +52,10 @@
         </div>
         <input type="text" id="filter_travailleur" />
         <div class="editor-field">
-            @Html.ListBox("Id_Travailleur")
+            @Html.DropDownList("Id_Travailleur", (SelectList)ViewBag.Id_Travailleur, new { size=4 })
             @Html.ValidationMessageFor(model => model.Id_Travailleur)
             <br /><a href="/Travailleur/Create">Ajouter un travailleur</a>
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Interlocuteur)
-        </div>
-        <div class="editor-field">
-            @Html.RadioButton("Interlocuteur", 0) Non
-            @Html.RadioButton("Interlocuteur", 1) Oui
-            @Html.ValidationMessageFor(model => model.Interlocuteur)
-        </div>
-
-
 
         <div class="editor-label">
             @Html.LabelFor(model => model.DateEntree)
@@ -74,12 +72,6 @@
             @Html.EditorFor(model => model.DateSortie)
             @Html.ValidationMessageFor(model => model.DateSortie)
         </div>
-
-        
-
-
-
-
 
         <p>
             <input type="submit" value="Create" />
@@ -114,13 +106,15 @@
                         }).prop('selected', true);
                     }
 
-                    $('#Code_Profession').empty();
+                    var $listProf = $('#Code_Profession');
+                    $listProf.empty();
+                    $('<option />', {val:'', text:''}).appendTo($listProf);
                     var professions = result.listProfessions;
                     $.each(professions, function () {
                         $('<option />', {
                             val: this.Code,
                             text: this.Denomination
-                        }).appendTo($('#Code_Profession'));
+                        }).appendTo($listProf);
                     });
                 }
             });                
@@ -139,7 +133,7 @@
                     $('#Numero_Entreprise').empty();
                     $.each(entreprises, function () {
                         $('<option />', {
-                            val: this.Numero_Entreprise,
+                            val: this.Numero,
                             text: this.Denomination
                         }).appendTo($('#Numero_Entreprise'));
                     });
@@ -157,12 +151,13 @@
                 dataType: 'json',
                 success: function (result) {
                     var travailleurs = result.filteredTravailleurs;
-                    $('#Id_Travailleur').empty();
+                    var $listTrav = $('#Id_Travailleur');
+                    $listTrav.empty();
                     $.each(travailleurs, function () {
                         $('<option />', {
                             val: this.Id_Travailleur,
                             text: (this.Prenom + ' ' + this.Nom)
-                        }).appendTo($('#Id_Travailleur'));
+                        }).appendTo($listTrav);
                     });
                 }
             });

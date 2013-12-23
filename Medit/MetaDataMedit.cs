@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Medit
 {
@@ -10,17 +11,21 @@ namespace Medit
     public partial class TravEnt
     {
         public class TravEntMetaData {
-            [Display(Name = "Date d'entrée")]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
-            [Required]
-            public System.DateTime DateEntree { get; set; }
-
             [Required]
             public string Interlocuteur { get; set; }
 
             [Display(Name = "Travailleur")]
-            [Required]
+            [Required, Range(1, Int32.MaxValue, ErrorMessage = "Le champ travailleur est requis.")]
             public decimal Id_Travailleur { get; set; }
+
+            [Display(Name = "Entreprise")]
+            [Required, Range(1, Int32.MaxValue, ErrorMessage = "Le champ entreprise est requis.")]
+            public decimal Numero_Entreprise { get; set; }
+
+            [Display(Name = "Date d'entrée")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+            [Required]
+            public System.DateTime DateEntree { get; set; }
 
             [Display(Name = "Date de Sortie")]
             [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
@@ -29,10 +34,6 @@ namespace Medit
             [Display(Name = "Profession")]
             [Required]
             public decimal Code_Profession { get; set; }
-
-            [Display(Name = "Entreprise")]
-            [Required]
-            public decimal Numero_Entreprise { get; set; }
 
             [Display(Name = "Langue")]
             public decimal Id_Langue { get; set; }
@@ -45,6 +46,7 @@ namespace Medit
         public class TravailleurMetaData
         {
             public decimal Id_Travailleur { get; set; }
+            
             [Required]
             public string Nom { get; set; }
 
