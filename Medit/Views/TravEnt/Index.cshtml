@@ -21,16 +21,17 @@
             @Html.DisplayNameFor(model => model.Code_Profession)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.isSoumis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Interlocuteur)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.DateEntree)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateSortie)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Interlocuteur)
-        </th>
-
-
         <th></th>
     </tr>
 
@@ -46,18 +47,21 @@
             @Html.DisplayFor(modelItem => item.Profession.LangueProfessions.ElementAt((int)item.Entreprise.Id_Langue - 1).Denomination)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DateEntree)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateSortie)
+            @Html.DisplayFor(modelItem => item.isSoumis)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.InterlocuteurFormated)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { idTravEnt = item.Id_TravEnt }) |
-            @Html.ActionLink("Details", "Details", new { idTravEnt = item.Id_TravEnt }) |
-            @Html.ActionLink("Delete", "Delete", new { idTravEnt = item.Id_TravEnt })
+            @Html.DisplayFor(modelItem => item.DateEntree)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateSortie)
+        </td>   
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id_TravEnt }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id_TravEnt }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id_TravEnt })
         </td>
     </tr>
 }

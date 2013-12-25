@@ -11,9 +11,9 @@ namespace Medit
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
     
-    public partial class TravEnt {
+    public partial class TravEnt
+    {
         public decimal Id_TravEnt { get; set; }
         public string Interlocuteur { get; set; }
         public System.DateTime DateEntree { get; set; }
@@ -22,16 +22,8 @@ namespace Medit
         public decimal Code_Profession { get; set; }
         public decimal Numero_Entreprise { get; set; }
         public decimal Id_Langue { get; set; }
-        public string InterlocuteurFormated 
-        {
-            get
-            { 
-                if(Interlocuteur.CompareTo("0") == 0)
-                    return "Non"; 
-                else
-                    return "Oui";
-            }
-        }
+        public string isSoumis { get; set; }
+        public string InterlocuteurFormated { get { if (Interlocuteur.CompareTo("1") == 0) return "Oui"; else return "Non"; } }
     
         public virtual Entreprise Entreprise { get; set; }
         public virtual Profession Profession { get; set; }

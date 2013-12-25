@@ -27,13 +27,7 @@ namespace Medit
         public string AdresseRue { get; set; }
         public Nullable<decimal> NumDossierMedical { get; set; }
         public decimal Id_CodePostal { get; set; }
-        public string NomPre
-        {
-            get
-            {
-                return Prenom + " " + Nom;
-            }
-        }
+        public string NomPre { get { return Prenom + " " + Nom; } }
     
         public virtual CodePostal CodePostal { get; set; }
         public virtual ICollection<TravEnt> TravEnts { get; set; }

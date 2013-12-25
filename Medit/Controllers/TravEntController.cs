@@ -114,6 +114,14 @@ namespace Medit.Controllers
             return Json(new { filteredTravailleurs = ListTravailleurs(filter)}, JsonRequestBehavior.AllowGet);
         }
 
+        public string setSoumis(TravEnt travent)
+        {
+            if (travent.Travailleur_Soumis != null)
+                return "Oui";
+            else
+                return "Non";
+        }
+
         // Set lists without selected values
         public void setLists()
         {
@@ -150,20 +158,28 @@ namespace Medit.Controllers
             }
         }
 
+        
+        //
         // GET: /TravEnt/
         public ActionResult Index()
         {
-            return View(db.TravEnts.ToList());
+            var listTravEnt = db.TravEnts.ToList();
+            foreach(var travent in listTravEnt)
+            {
+                travent.isSoumis = setSoumis(travent);
+            }
+            return View(listTravEnt);
         }
 
         // GET: /TravEnt/Details/5
-        public ActionResult Details(decimal idTravEnt = 0)
+        public ActionResult Details(decimal id = 0)
         {
-            TravEnt travent = db.TravEnts.Find(idTravEnt);
+            TravEnt travent = db.TravEnts.Find(id);
             if (travent == null)
             {
                 return HttpNotFound();
             }
+            travent.isSoumis = setSoumis(travent);
             return View(travent);
         }
 
@@ -183,6 +199,21 @@ namespace Medit.Controllers
             {
                 db.TravEnts.Add(travent);
                 db.SaveChanges();
+
+                if (travent.isSoumis.CompareTo("Oui") == 0)
+                {
+                    Travailleur_Soumis travSoum = new Travailleur_Soumis();
+                    travSoum.Id_TravEnt = travent.Id_TravEnt;
+                    db.Travailleur_Soumis.Add(travSoum);
+                }
+                else
+                {
+                    Travailleur_NonSoumis travNonSoum = new Travailleur_NonSoumis();
+                    travNonSoum.Id_TravEnt = travent.Id_TravEnt;
+                    db.Travailleur_NonSoumis.Add(travNonSoum);
+                }
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
@@ -191,21 +222,19 @@ namespace Medit.Controllers
         }
 
         // GET: /TravEnt/Edit/5
-        public ActionResult Edit(decimal idTravEnt = 0)
+        public ActionResult Edit(decimal id = 0)
         {
-            TravEnt travent = db.TravEnts.Find(idTravEnt);
+            TravEnt travent = db.TravEnts.Find(id);
             if (travent == null)
             {
                 return HttpNotFound();
             }
-
-            setLists(idTravEnt);
+            travent.isSoumis = setSoumis(travent);
+            setLists(id);
             return View(travent);
         }
 
-        //
         // POST: /TravEnt/Edit/5
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(TravEnt travent)
@@ -216,15 +245,14 @@ namespace Medit.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            setLists();
             return View(travent);
         }
 
-        //
         // GET: /TravEnt/Delete/5
-
-        public ActionResult Delete(decimal idTravEnt = 0)
+        public ActionResult Delete(decimal id = 0)
         {
-            TravEnt travent = db.TravEnts.Find(idTravEnt);
+            TravEnt travent = db.TravEnts.Find(id);
             if (travent == null)
             {
                 return HttpNotFound();
@@ -232,14 +260,24 @@ namespace Medit.Controllers
             return View(travent);
         }
 
-        //
         // POST: /TravEnt/Delete/5
-
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(decimal idTravEnt)
+        public ActionResult DeleteConfirmed(decimal id)
         {
-            TravEnt travent = db.TravEnts.Find(idTravEnt);
+            TravEnt travent = db.TravEnts.Find(id);
+            
+            if (travent.Travailleur_Soumis != null)
+            {
+                Travailleur_Soumis travSoum = db.Travailleur_Soumis.Find(id);
+                db.Travailleur_Soumis.Remove(travSoum);
+            }
+            else if(travent.Travailleur_NonSoumis != null)
+            {
+                Travailleur_NonSoumis travNonSoum = db.Travailleur_NonSoumis.Find(id);
+                db.Travailleur_NonSoumis.Remove(travNonSoum);
+            }
+
             db.TravEnts.Remove(travent);
             db.SaveChanges();
             return RedirectToAction("Index");

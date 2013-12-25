@@ -10,17 +10,38 @@
     <legend>TravEnt</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Id_TravEnt)
+         @Html.DisplayNameFor(model => model.Id_Travailleur)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Id_TravEnt)
+        @Html.DisplayFor(model => model.Travailleur.NomPre)
+    </div>
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Numero_Entreprise)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Entreprise.Denomination)
+    </div>
+    
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Code_Profession)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Profession.LangueProfessions.ElementAt((int)model.Entreprise.Id_Langue - 1).Denomination)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.isSoumis)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.isSoumis)
     </div>
 
     <div class="display-label">
          @Html.DisplayNameFor(model => model.Interlocuteur)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Interlocuteur)
+        @Html.DisplayFor(model => model.InterlocuteurFormated)
     </div>
 
     <div class="display-label">
@@ -31,13 +52,6 @@
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Id_Travailleur)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Id_Travailleur)
-    </div>
-
-    <div class="display-label">
          @Html.DisplayNameFor(model => model.DateSortie)
     </div>
     <div class="display-field">
@@ -45,20 +59,14 @@
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Code_Profession)
+         @Html.DisplayNameFor(model => model.Id_Langue)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Code_Profession)
+        @Html.DisplayFor(model => model.Entreprise.Langue.Libelle)
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Numero_Entreprise)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Numero_Entreprise)
-    </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id_TravEnt }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

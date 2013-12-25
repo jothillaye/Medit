@@ -30,11 +30,12 @@
             </div>
 
             <div class="editor-label">
-                @Html.LabelFor(model => model.Code_Profession)
+                @Html.LabelFor(model => model.isSoumis)
             </div>
             <div class="editor-field">
-                @Html.DropDownList("Code_Profession", String.Empty)
-                @Html.ValidationMessageFor(model => model.Code_Profession)
+                @Html.RadioButton("isSoumis", "Non") Non
+                @Html.RadioButton("isSoumis", "Oui") Oui
+                @Html.ValidationMessageFor(model => model.isSoumis)
             </div>
 
             <div class="editor-label">
@@ -55,6 +56,14 @@
             @Html.DropDownList("Id_Travailleur", (SelectList)ViewBag.Id_Travailleur, new { size=4 })
             @Html.ValidationMessageFor(model => model.Id_Travailleur)
             <br /><a href="/Travailleur/Create">Ajouter un travailleur</a>
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Code_Profession)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("Code_Profession", String.Empty)
+            @Html.ValidationMessageFor(model => model.Code_Profession)
         </div>
 
         <div class="editor-label">
@@ -121,10 +130,10 @@
         });
 
         $('#filter_entreprise').on("keyup", function() {
-            var filter = $('#filter_entreprise').val();
+            var filterValue = $('#filter_entreprise').val();
             $.ajax({
                 url: '/TravEnt/FilterEntreprises',
-                data: '{"filter":"' + filter + '"}',
+                data: JSON.stringify({filter : filterValue}),
                 type: 'POST',
                 contentType: 'application/json;',
                 dataType: 'json',
@@ -142,10 +151,10 @@
         });
 
         $('#filter_travailleur').on("keyup", function () {
-            var filter = $('#filter_travailleur').val();
+            var filterValue = $('#filter_travailleur').val();
             $.ajax({
                 url: '/TravEnt/FilterTravailleurs',
-                data: '{"filter":"' + filter + '"}',
+                data: JSON.stringify({ filter: filterValue }),
                 type: 'POST',
                 contentType: 'application/json;',
                 dataType: 'json',

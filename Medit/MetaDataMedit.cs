@@ -37,6 +37,10 @@ namespace Medit
 
             [Display(Name = "Langue")]
             public decimal Id_Langue { get; set; }
+
+            [Display(Name = "Soumis à des risques ?")]
+            [Required(ErrorMessage = "Le champ ci-dessus est requis.")]
+            public string isSoumis { get; set; }
         }
     }
 
