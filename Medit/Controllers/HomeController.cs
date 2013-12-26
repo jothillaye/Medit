@@ -10,7 +10,7 @@ namespace Medit.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "don't Modify this template, is it amazing.";
+            ViewBag.Message = "A propos du Projet.";
 
             return View();
         }

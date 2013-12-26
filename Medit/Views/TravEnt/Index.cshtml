@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<Medit.TravEnt>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Liste des Travailleurs dans une Entreprise";
 }
 
-<h2>Index</h2>
+<h2>Liste des Travailleurs dans une Entreprise</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nouveau lien Travailleur/Entreprise", "Create")
 </p>
-<table>
+<table id="tabTravEnt">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Id_Travailleur)
@@ -46,10 +46,10 @@
         <td>
             @Html.DisplayFor(modelItem => item.Profession.LangueProfessions.ElementAt((int)item.Entreprise.Id_Langue - 1).Denomination)
         </td>
-        <td>
+        <td align="center">
             @Html.DisplayFor(modelItem => item.isSoumis)
         </td>
-        <td>
+        <td align="center">
             @Html.DisplayFor(modelItem => item.InterlocuteurFormated)
         </td>
         <td>

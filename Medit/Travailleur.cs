@@ -28,6 +28,8 @@ namespace Medit
         public Nullable<decimal> NumDossierMedical { get; set; }
         public decimal Id_CodePostal { get; set; }
         public string NomPre { get { return Prenom + " " + Nom; } }
+        public string Adresse { get { return AdresseRue + ", " + AdresseNum; } }
+        public string Adresse2 { get { return CodePostal.Code + " " + CodePostal.Localite; } }
     
         public virtual CodePostal CodePostal { get; set; }
         public virtual ICollection<TravEnt> TravEnts { get; set; }

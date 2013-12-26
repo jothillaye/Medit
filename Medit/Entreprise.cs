@@ -29,6 +29,8 @@ namespace Medit
         public decimal Code_Secteur { get; set; }
         public decimal Id_Langue { get; set; }
         public decimal Id_CodePostal { get; set; }
+        public string Adresse { get { return AdresseRue + ", " + AdresseNum; } }
+        public string Adresse2 { get { return CodePostal.Code + " " + CodePostal.Localite; } }
     
         public virtual CodePostal CodePostal { get; set; }
         public virtual Langue Langue { get; set; }

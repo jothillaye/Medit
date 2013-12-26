@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Medit.Entreprise>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Liste des Entreprises</h2>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Denomination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Adresse)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumTel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NbEmployeDebAnneeSoumis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NbEmployeDebAnneeNon_Soumis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Code_Secteur)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Langue)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Denomination)
+        </td>
+        <td width="15%">
+           @Html.DisplayFor(modelItem => item.Adresse)<br />
+           @Html.DisplayFor(modelItem => item.Adresse2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumTel)
+        </td>
+        <td align="center">
+            @Html.DisplayFor(modelItem => item.NbEmployeDebAnneeSoumis)
+        </td>
+        <td align="center">
+            @Html.DisplayFor(modelItem => item.NbEmployeDebAnneeNon_Soumis)
+        </td>
+        <td align="center">
+            @Html.DisplayFor(modelItem => item.Code_Secteur)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Langue.Libelle)
+        </td>
+    </tr>
+}
+</table>
+
+<p><b>*</b> : au début de l'année.</p>

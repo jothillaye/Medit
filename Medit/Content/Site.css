@@ -553,8 +553,11 @@ th {
     border: none 0px;
     padding-left: 0;
     padding-right: 8px;
-    max-width: 120px;
 }
+
+    #tabTravEnt th {
+        max-width: 120px;
+    }
 
     th a {
         display: block;

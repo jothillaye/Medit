@@ -189,6 +189,7 @@
       <DependentUpon>Medit.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EntrepriseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TravailleurController.cs" />
     <Compile Include="Controllers\TravEntController.cs" />
@@ -386,6 +387,7 @@
     <Content Include="Views\Travailleur\Create.cshtml" />
     <Content Include="Views\Travailleur\Edit.cshtml" />
     <Content Include="Views\Travailleur\Delete.cshtml" />
+    <Content Include="Views\Entreprise\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

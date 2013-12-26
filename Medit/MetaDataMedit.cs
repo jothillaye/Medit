@@ -13,6 +13,7 @@ namespace Medit
         public class TravEntMetaData {
             [Required]
             public string Interlocuteur { get; set; }
+            public string InterlocuteurFormated { get { if (Interlocuteur.CompareTo("1") == 0) return "Oui"; else return "Non"; } }
 
             [Display(Name = "Travailleur")]
             [Required, Range(1, Int32.MaxValue, ErrorMessage = "Le champ travailleur est requis.")]
@@ -48,9 +49,7 @@ namespace Medit
     public partial class Travailleur
     {
         public class TravailleurMetaData
-        {
-            public decimal Id_Travailleur { get; set; }
-            
+        {            
             [Required]
             public string Nom { get; set; }
 
@@ -71,6 +70,7 @@ namespace Medit
             public string AdresseRue { get; set; }
 
             [Display(Name = "Dossier médical")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
             public Nullable<decimal> NumDossierMedical { get; set; }
 
             [Required]
@@ -79,6 +79,31 @@ namespace Medit
 
             [Display(Name="Prénom & Nom")]
             public string NomPre { get { return Prenom + " " + Nom; } }           
+        }
+    }
+
+    [MetadataType(typeof(EntrepriseMetaData))]
+    public partial class Entreprise
+    {
+        public class EntrepriseMetaData
+        {
+            [Display(Name = "Numéro")]
+            public string AdresseNum { get; set; }
+
+            [Display(Name = "Rue")]
+            public string AdresseRue { get; set; }
+                        
+            [Display(Name = "Nombre d'Employés Soumis*")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
+            public decimal NbEmployeDebAnneeSoumis { get; set; }
+
+            [Display(Name = "Nombre d'Employés Non-Soumis*")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
+            public decimal NbEmployeDebAnneeNon_Soumis { get; set; }
+
+            [Display(Name = "Code du Secteur")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N0}")]
+            public decimal Code_Secteur { get; set; }
         }
     }
 }
