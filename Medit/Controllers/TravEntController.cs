@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -82,12 +83,10 @@ namespace Medit.Controllers
         [HttpGet]
         public JsonResult TranslateProfessions(int id)
         {
-            decimal id_entreprise = id;
-
             var langue = (
                 from entreprise in db.Entreprises
                 join lang in db.Langues on entreprise.Id_Langue equals lang.Id_Langue
-                where entreprise.Numero == id_entreprise
+                where entreprise.Numero == id
                 select new { lang.Id_Langue, lang.Libelle })
             .ToList();
             
@@ -190,6 +189,21 @@ namespace Medit.Controllers
             return View();
         }
 
+        public List<TravEnt> TravEntAlreadyExist(TravEnt travent)
+        {
+            List<TravEnt> listTravEnt = db.TravEnts.ToArray()
+                .Where(te => 
+                    te.Id_Travailleur == travent.Id_Travailleur &&
+                    te.DateEntree == travent.DateEntree
+                )
+                .Select(te => new TravEnt
+                {
+                    Id_TravEnt = te.Id_TravEnt
+                })
+                .ToList();
+            return listTravEnt;
+        }
+
         // POST: /TravEnt/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -197,24 +211,39 @@ namespace Medit.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.TravEnts.Add(travent);
-                db.SaveChanges();
-
-                if (travent.isSoumis.CompareTo("Oui") == 0)
+                List<TravEnt> listTravEnt = TravEntAlreadyExist(travent);
+                if (listTravEnt.Count() > 0)
                 {
-                    Travailleur_Soumis travSoum = new Travailleur_Soumis();
-                    travSoum.Id_TravEnt = travent.Id_TravEnt;
-                    db.Travailleur_Soumis.Add(travSoum);
+                    ViewBag.ErrorField = "Lien déjà existant pour cette date.";     
                 }
-                else
+                else 
                 {
-                    Travailleur_NonSoumis travNonSoum = new Travailleur_NonSoumis();
-                    travNonSoum.Id_TravEnt = travent.Id_TravEnt;
-                    db.Travailleur_NonSoumis.Add(travNonSoum);
-                }
-                db.SaveChanges();
+                    if (travent.DateSortie != null && (travent.DateEntree.Date > travent.DateSortie.Value.Date))
+                    {
+                        ViewBag.ErrorField = "La date de sortie doit être plus grande que la date d'entrée.";
+                    }
+                    else
+                    {
+                        db.TravEnts.Add(travent);
+                        db.SaveChanges();
 
-                return RedirectToAction("Index");
+                        if (travent.isSoumis.CompareTo("Oui") == 0)
+                        {
+                            Travailleur_Soumis travSoum = new Travailleur_Soumis();
+                            travSoum.Id_TravEnt = travent.Id_TravEnt;
+                            db.Travailleur_Soumis.Add(travSoum);
+                        }
+                        else
+                        {
+                            Travailleur_NonSoumis travNonSoum = new Travailleur_NonSoumis();
+                            travNonSoum.Id_TravEnt = travent.Id_TravEnt;
+                            db.Travailleur_NonSoumis.Add(travNonSoum);
+                        }
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index");
+                    }
+                }
             }
 
             setLists();

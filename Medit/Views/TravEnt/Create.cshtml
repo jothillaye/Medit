@@ -10,6 +10,10 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
+    <div class="message-error">
+        @Html.Display("ErrorField")
+    </div>
+
     <fieldset>
         <legend>TravEnt</legend>
         <div class="float-right right-col">
@@ -116,14 +120,21 @@
                     }
 
                     var $listProf = $('#Code_Profession');
+                    var selectProf = $listProf.find(":selected").val();
+
                     $listProf.empty();
                     $('<option />', {val:'', text:''}).appendTo($listProf);
                     var professions = result.listProfessions;
-                    $.each(professions, function () {
-                        $('<option />', {
+                    $.each(professions, function () {                        
+                        var $option = $('<option />', {
                             val: this.Code,
                             text: this.Denomination
-                        }).appendTo($listProf);
+                        });
+
+                        if(this.Code == selectProf)
+                            $option.attr("selected","selected");
+
+                        $option.appendTo($listProf);
                     });
                 }
             });                
