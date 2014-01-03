@@ -20,7 +20,7 @@
             <div class="editor-label">
                 @Html.LabelFor(model => model.Numero_Entreprise)
             </div>
-            <input type="text" id="filter_entreprise" />
+            <input type="text" id="filter_entreprise" autocomplete="off"/>
             <div class="editor-field">
                 @Html.DropDownList("Numero_Entreprise", (SelectList)ViewBag.Numero_Entreprise, new { size=4 })
                 @Html.ValidationMessageFor(model => model.Numero_Entreprise)
@@ -55,7 +55,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Id_Travailleur)
         </div>
-        <input type="text" id="filter_travailleur" />
+        <input type="text" id="filter_travailleur" autocomplete="off" />
         <div class="editor-field">
             @Html.DropDownList("Id_Travailleur", (SelectList)ViewBag.Id_Travailleur, new { size=4 })
             @Html.ValidationMessageFor(model => model.Id_Travailleur)

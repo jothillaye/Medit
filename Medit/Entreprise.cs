@@ -30,7 +30,7 @@ namespace Medit
         public decimal Id_Langue { get; set; }
         public decimal Id_CodePostal { get; set; }
         public string Adresse { get { return AdresseRue + ", " + AdresseNum; } }
-        public string Adresse2 { get { return CodePostal.Code + " " + CodePostal.Localite; } }
+        public string Adresse2 { get { if (CodePostal != null) return CodePostal.Code + " " + CodePostal.Localite; else return ""; } }
     
         public virtual CodePostal CodePostal { get; set; }
         public virtual Langue Langue { get; set; }
