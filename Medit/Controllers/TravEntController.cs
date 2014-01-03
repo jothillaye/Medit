@@ -270,6 +270,26 @@ namespace Medit.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Update soumis <-> non-soumis if needed   
+                Travailleur_NonSoumis travNonSoumis = db.Travailleur_NonSoumis.Find(travent.Id_TravEnt);
+                if ((travent.isSoumis.CompareTo("Oui") == 0) && (travNonSoumis != null))
+                {
+                    db.Travailleur_NonSoumis.Remove(travNonSoumis);
+                        
+                    Travailleur_Soumis newTravSoumis = new Travailleur_Soumis();
+                    newTravSoumis.Id_TravEnt = travent.Id_TravEnt;
+                    db.Travailleur_Soumis.Add(newTravSoumis);
+                }
+                else if ((travent.isSoumis.CompareTo("Non") == 0) && (travNonSoumis == null))
+                {
+                    Travailleur_Soumis travSoumis = db.Travailleur_Soumis.Find(travent.Id_TravEnt);
+                    db.Travailleur_Soumis.Remove(travSoumis);
+
+                    Travailleur_NonSoumis newTravNonSoumis = new Travailleur_NonSoumis();
+                    newTravNonSoumis.Id_TravEnt = travent.Id_TravEnt;
+                    db.Travailleur_NonSoumis.Add(newTravNonSoumis);
+                }
+
                 db.Entry(travent).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

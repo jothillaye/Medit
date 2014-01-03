@@ -44,9 +44,8 @@
                 @Html.LabelFor(model => model.isSoumis)
             </div>
             <div class="editor-field">
-                @Html.RadioButton("isSoumis", "Non", new { @disabled = "disabled" }) Non
-                @Html.RadioButton("isSoumis", "Oui", new { @disabled = "disabled" }) Oui
-                @Html.HiddenFor(model => model.isSoumis)
+                @Html.RadioButton("isSoumis", "Non") Non
+                @Html.RadioButton("isSoumis", "Oui") Oui
             </div>
 
             <div class="editor-label">
@@ -72,7 +71,8 @@
             @Html.LabelFor(model => model.DateEntree)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.DateEntree)
+            @Html.TextBoxFor(model => model.DateEntree, "{0:dd-MM-yyyy}", new { @disabled = "disabled" })
+            @Html.HiddenFor(model => model.DateEntree)
             @Html.ValidationMessageFor(model => model.DateEntree)
         </div>
 
